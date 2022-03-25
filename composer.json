@@ -1,0 +1,29 @@
+{
+    "name": "notabenedev/site-group-price",
+    "description": "add group and price",
+    "type": "package",
+    "require": {
+        "portedcheese/base-settings": "@dev",
+        "portedcheese/seo-integration": "@dev"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "n.borisova",
+            "email": "n.borisova@me.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "notabenedev\\SiteGroupPrice\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "notabenedev\\SiteGroupPrice\\SiteGroupPriceProvider"
+            ]
+        }
+    }
+}
