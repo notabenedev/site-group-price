@@ -3,6 +3,7 @@
 namespace notabenedev\SiteGroupPrice;
 
 use Illuminate\Support\ServiceProvider;
+use notabenedev\SiteGroupPrice\Console\Commands\GroupPriceMakeCommand;
 
 class SiteGroupPriceProvider extends ServiceProvider
 {
@@ -25,7 +26,18 @@ class SiteGroupPriceProvider extends ServiceProvider
      */
     public function boot()
     {
+        //Публикация конфигурации
         $this->publishes([__DIR__.'/config/site-group-price.php' => config_path('site-group-price.php'),
             ], 'config');
+
+        //Подключение миграций
+        $this->loadMigrationsFrom(__DIR__.'/database/migrations');
+
+        //Console
+        if ($this->app->runningInConsole()){
+            $this->commands([
+                GroupPriceMakeCommand::class,
+            ]);
+        }
     }
 }
