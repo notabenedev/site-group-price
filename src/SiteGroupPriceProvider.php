@@ -1,9 +1,9 @@
 <?php
 
-namespace notabenedev\SiteGroupPrice;
+namespace Notabenedev\SiteGroupPrice;
 
 use Illuminate\Support\ServiceProvider;
-use notabenedev\SiteGroupPrice\Console\Commands\GroupPriceMakeCommand;
+use Notabenedev\SiteGroupPrice\Console\Commands\GroupPriceMakeCommand;
 
 class SiteGroupPriceProvider extends ServiceProvider
 {

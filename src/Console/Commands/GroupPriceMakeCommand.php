@@ -1,6 +1,6 @@
 <?php
 
-namespace notabenedev\SiteGroupPrice\Console\Commands;
+namespace Notabenedev\SiteGroupPrice\Console\Commands;
 
 use Illuminate\Console\Command;
 use PortedCheese\BaseSettings\Console\Commands\BaseConfigModelCommand;
@@ -15,6 +15,9 @@ class GroupPriceMakeCommand extends BaseConfigModelCommand
     protected $signature = 'make:group-price
      {--all : Run all}
      {--models : Export models}
+     {--controllers : Export controllers}
+     {--policies : Export and create rules} 
+     {--only-default : Create only default rules}
      ';
 
     /**
@@ -29,7 +32,7 @@ class GroupPriceMakeCommand extends BaseConfigModelCommand
      * @var string
      *
      */
-    protected $vendorName = 'notabenedev';
+    protected $vendorName = 'Notabenedev';
 
     /**
      * Package Name
@@ -44,6 +47,26 @@ class GroupPriceMakeCommand extends BaseConfigModelCommand
      */
     protected $models = ["Group"];
 
+    /**
+     * Make Controllers
+     */
+    protected $controllers = [
+        "Admin" => ["GroupController"],
+    ];
+
+    /**
+     * Policies
+     * @var array
+     *
+     */
+    protected $ruleRules = [
+        [
+            "title" => "Группы прайса",
+            "slug" => "groups",
+            "policy" => "GroupPolicy",
+        ],
+
+    ];
     /**
      * Create a new command instance.
      *
@@ -61,6 +84,21 @@ class GroupPriceMakeCommand extends BaseConfigModelCommand
      */
     public function handle()
     {
-        return 0;
+        $all = $this->option("all");
+
+
+        if ($this->option("models") || $all) {
+            $this->exportModels();
+        }
+
+        if ($this->option("controllers") || $all) {
+            $this->exportControllers("Admin");
+        }
+
+        if ($this->option("policies") || $all) {
+            $this->makeRules();
+
+        }
+
     }
 }

@@ -16,13 +16,13 @@
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
-            "notabenedev\\SiteGroupPrice\\": "src/"
+            "Notabenedev\\SiteGroupPrice\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "notabenedev\\SiteGroupPrice\\SiteGroupPriceProvider"
+                "Notabenedev\\SiteGroupPrice\\SiteGroupPriceProvider"
             ]
         }
     }
