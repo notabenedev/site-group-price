@@ -1,5 +1,5 @@
 @if (! empty($group))
-{{--    @include("site-group-price::admin.groups.includes.breadcrumb")--}}
+    @include("site-group-price::admin.groups.includes.breadcrumb")
 @endif
 <div class="col-12 mb-2">
     <div class="card">

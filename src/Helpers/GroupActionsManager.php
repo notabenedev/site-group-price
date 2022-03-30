@@ -252,4 +252,46 @@ class GroupActionsManager
             $this->forgetGroupChildrenIdsCache($parent);
         }
     }
+
+    /**
+     * Admin breadcrumbs
+     *
+     * @param Group $group
+     * @param bool $isPagePage
+     * @return array
+     *
+     */
+    public function getAdminBreadcrumb(Group $group, $isPricePage = false)
+    {
+        $breadcrumb = [];
+        if (! empty($group->parent)) {
+            $breadcrumb = $this->getAdminBreadcrumb($group->parent);
+        }
+        else {
+            $breadcrumb[] = (object) [
+                "title" => config("site-group-price.sitePackageName"),
+                "url" => route("admin.groups.index"),
+                "active" => false,
+            ];
+        }
+        $routeParams = Route::current()->parameters();
+        $isPricePage = $isPricePage && ! empty($routeParams["price"]);
+        $active = ! empty($routeParams["group"]) &&
+            $routeParams["group"]->id == $group->id &&
+            ! $isPricePage;
+        $breadcrumb[] = (object) [
+            "title" => $group->title,
+            "url" => route("admin.groups.show", ["group" => $group]),
+            "active" => $active,
+        ];
+//        if ($isPricePage) {
+//            $page = $routeParams["page"];
+//            $breadcrumb[] = (object) [
+//                "title" => $page->title,
+//                "url" => route("admin.prices.show", ["page" => $page]),
+//                "active" => true,
+//            ];
+//        }
+        return $breadcrumb;
+    }
 }

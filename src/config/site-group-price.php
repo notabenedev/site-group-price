@@ -6,6 +6,7 @@ return [
     "groupFacade" => \Notabenedev\SiteGroupPrice\Helpers\GroupActionsManager::class,
 
     "onePage" => true,
+    "siteBreadcrumbs" => false,
 
     "sitePackageName" => "Группы прайсов",
     "siteGroupsName" => "Группы",
