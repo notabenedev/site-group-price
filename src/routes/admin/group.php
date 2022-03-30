@@ -29,8 +29,8 @@ Route::group([
         Route::post("store-child", [GroupController::class,"store"])
             ->name("store-child");
         // Meta.
-//        Route::get("metas", [GroupController::class,"metas"])
-//            ->name("metas");
+        Route::get("metas", [GroupController::class,"metas"])
+            ->name("metas");
     });
 }
 );

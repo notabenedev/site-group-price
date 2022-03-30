@@ -16,7 +16,7 @@
                     <li class="nav-item">
                         <a href="{{ route('admin.groups.index') }}?view=tree"
                            class="nav-link{{ isset($isTree) && $isTree ? " active" : "" }}">
-                            {{ config("site-group-price.siteGroupsName") }}
+                            Приоритет
                         </a>
                     </li>
                 @endcan

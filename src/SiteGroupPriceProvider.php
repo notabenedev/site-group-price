@@ -2,6 +2,7 @@
 
 namespace Notabenedev\SiteGroupPrice;
 
+use App\Group;
 use Illuminate\Support\ServiceProvider;
 use Notabenedev\SiteGroupPrice\Console\Commands\GroupPriceMakeCommand;
 
@@ -51,10 +52,17 @@ class SiteGroupPriceProvider extends ServiceProvider
         // Подключение шаблонов.
         $this->loadViewsFrom(__DIR__ . '/resources/views', 'site-group-price');
 
+        // Подключение метатегов.
+        $seo = app()->config["seo-integration.models"];
+        $seo["groups"] = Group::class;
+        app()->config["seo-integration.models"] = $seo;
+
         // Assets.
         $this->publishes([
             __DIR__ . '/resources/js/components' => resource_path('js/components/vendor/site-group-price'),
         ], 'public');
+
+
     }
 
     /**

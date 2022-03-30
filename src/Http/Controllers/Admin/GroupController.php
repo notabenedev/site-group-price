@@ -2,7 +2,9 @@
 
 namespace Notabenedev\SiteGroupPrice\Http\Controllers\Admin;
 
+use App\Folder;
 use App\Http\Controllers\Controller;
+use App\Meta;
 use Illuminate\Http\Request;
 use App\Group;
 use Illuminate\Support\Facades\Validator;
@@ -80,13 +82,17 @@ class GroupController extends Controller
     protected function storeValidator(array $data)
     {
         Validator::make($data, [
-            "title" => ["required", "max:250"],
-            "slug" => ["nullable", "max:250", "unique:groups,slug"],
+            "title" => ["required", "max:150"],
+            "slug" => ["nullable", "max:150", "unique:groups,slug"],
             "short" => ["nullable", "max:500"],
+            "accent" => ["nullable", "max:500"],
+            "info" => ["nullable"],
         ], [], [
             "title" => "Заголовок",
             "slug" => "Адресная строка",
             "short" => "Краткое описание",
+            "accent" => "Акцент",
+            "info" => "Информация",
         ])->validate();
     }
 
@@ -94,36 +100,79 @@ class GroupController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Group $group
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Group $group)
     {
-        //
+        $childrenCount = $group->children->count();
+        if ($childrenCount) {
+            $children = $group->children()->orderBy("priority")->get();
+        }
+        else {
+            $children = false;
+        }
+        return view("site-group-price::admin.groups.show", [
+            "group" => $group,
+            "childrenCount" => $childrenCount,
+            "children" => $children
+        ] );
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Group  $group
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Group $group)
     {
-        //
+        return view("site-group-price::admin.groups.edit", compact("group"));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  Group $group
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Group $group)
     {
-        //
+        $this->updateValidator($request->all(), $group);
+        $group->update($request->all());
+        return redirect()
+            ->route("admin.groups.show", ["group" => $group])
+            ->with("success", "Успешно обновлено");
     }
+
+    /**
+     * Update validate
+     *
+     * @param array $data
+     * @param Group $group
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    protected function updateValidator(array $data, Group $group)
+    {
+        $id = $group->id;
+        Validator::make($data, [
+            "title" => ["required", "max:150"],
+            "slug" => ["nullable", "max:150", "unique:groups,slug,{$id}"],
+            "short" => ["nullable", "max:500"],
+            "accent" => ["nullable", "max:500"],
+            "info" => ["nullable"],
+        ], [], [
+            "title" => "Заголовок",
+            "slug" => "Адресная строка",
+            "short" => "Краткое описание",
+            "accent" => "Акцент",
+            "info" => "Информация",
+        ])->validate();
+    }
+
 
     /**
      * Remove the specified resource from storage.
@@ -136,6 +185,23 @@ class GroupController extends Controller
         //
     }
 
+    /**
+     * Add metas to group
+     *
+     * @param Group $group
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+
+    public function metas(Group $group)
+    {
+        $this->authorize("viewAny", Meta::class);
+        $this->authorize("update", $group);
+
+        return view("site-group-price::admin.groups.metas", [
+            'group' => $group,
+        ]);
+    }
 
     /**
      * Publish group
