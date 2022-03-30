@@ -1,10 +1,11 @@
 {
     "name": "notabenedev/site-group-price",
     "description": "add group and price",
-    "type": "package",
+    "type": "library",
     "require": {
-        "portedcheese/base-settings": "@dev",
-        "portedcheese/seo-integration": "@dev"
+        "portedcheese/base-settings": "^v3.0",
+        "portedcheese/seo-integration": "^v1.4",
+        "portedcheese/admin-site-menu": "^v1.6"
     },
     "license": "MIT",
     "authors": [

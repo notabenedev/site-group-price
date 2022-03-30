@@ -2,6 +2,8 @@
 
 namespace Notabenedev\SiteGroupPrice\Console\Commands;
 
+use App\Menu;
+use App\MenuItem;
 use Illuminate\Console\Command;
 use PortedCheese\BaseSettings\Console\Commands\BaseConfigModelCommand;
 
@@ -14,9 +16,11 @@ class GroupPriceMakeCommand extends BaseConfigModelCommand
      */
     protected $signature = 'make:group-price
      {--all : Run all}
+     {--menu : Config menu}
      {--models : Export models}
      {--controllers : Export controllers}
      {--policies : Export and create rules} 
+     {--vue : Export vue}
      {--only-default : Create only default rules}
      ';
 
@@ -67,6 +71,26 @@ class GroupPriceMakeCommand extends BaseConfigModelCommand
         ],
 
     ];
+
+    /**
+     * Vue files folder
+     *
+     * @var string
+     */
+    protected $vueFolder = "site-group-price";
+
+    /**
+     * Vue files list
+     *
+     * @var array
+     */
+    protected $vueIncludes = [
+        'admin' => [ 'admin-group-list' => "GroupListComponent",
+        ],
+        'app' => [],
+    ];
+
+
     /**
      * Create a new command instance.
      *
@@ -95,10 +119,52 @@ class GroupPriceMakeCommand extends BaseConfigModelCommand
             $this->exportControllers("Admin");
         }
 
+        if ($this->option('menu') || $all) {
+            $this->makeMenu();
+        }
+
         if ($this->option("policies") || $all) {
             $this->makeRules();
 
         }
 
+        if ($this->option("vue") || $all) {
+            $this->makeVueIncludes("admin");
+            $this->makeVueIncludes("app");
+        }
+
+    }
+
+    /**
+     * Создать меню.
+     */
+    protected function makeMenu()
+    {
+        try {
+            $menu = Menu::query()->where("key", "admin")->firstOrFail();
+        }
+        catch (\Exception $exception) {
+            return;
+        }
+
+        $title = config("site-group-price.sitePackageName");
+        $itemData = [
+            "title" => $title,
+            "menu_id" => $menu->id,
+            "url" => "#",
+            "template" => "site-group-price::admin.menu",
+        ];
+
+        try {
+            $menuItem = MenuItem::query()
+                ->where("menu_id", $menu->id)
+                ->where("title", "$title")
+                ->firstOrFail();
+            $this->info("Menu item '{$title}' not updated");
+        }
+        catch (\Exception $exception) {
+            MenuItem::create($itemData);
+            $this->info("Menu item '{$title}' was created");
+        }
     }
 }

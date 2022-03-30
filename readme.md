@@ -1,5 +1,9 @@
 ## Site group price
 
+Копировать:
+- php artisan vendor:publish --provider="Notabenedev\SiteGroupPrice\SiteGroupPriceProvider" --tag=public --force
+- php artisan vendor:publish --provider="Notabenedev\SiteGroupPrice\SiteGroupPriceProvider" --tag=config
+
 ## Description
 
 ## Config

@@ -17,6 +17,8 @@ class SiteGroupPriceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__.'/config/site-group-price.php','site-group-price'
         );
+
+        $this->initFacades();
     }
 
     /**
@@ -39,5 +41,30 @@ class SiteGroupPriceProvider extends ServiceProvider
                 GroupPriceMakeCommand::class,
             ]);
         }
+
+        //Подключаем роуты
+        if (config("site-group-price.groupAdminRoutes")) {
+            $this->loadRoutesFrom(__DIR__."/routes/admin/group.php");
+            $this->loadRoutesFrom(__DIR__."/routes/site/group.php");
+        }
+
+        // Подключение шаблонов.
+        $this->loadViewsFrom(__DIR__ . '/resources/views', 'site-group-price');
+
+        // Assets.
+        $this->publishes([
+            __DIR__ . '/resources/js/components' => resource_path('js/components/vendor/site-group-price'),
+        ], 'public');
+    }
+
+    /**
+     * Подключение Facade.
+     */
+    protected function initFacades()
+    {
+        $this->app->singleton("group-actions", function () {
+            $class = config("site-group-price.groupFacade");
+            return new $class;
+        });
     }
 }
