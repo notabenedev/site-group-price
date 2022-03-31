@@ -3,6 +3,7 @@
 namespace Notabenedev\SiteGroupPrice;
 
 use App\Group;
+use App\Price;
 use Illuminate\Support\ServiceProvider;
 use Notabenedev\SiteGroupPrice\Console\Commands\GroupPriceMakeCommand;
 
@@ -47,6 +48,7 @@ class SiteGroupPriceProvider extends ServiceProvider
         if (config("site-group-price.groupAdminRoutes")) {
             $this->loadRoutesFrom(__DIR__."/routes/admin/group.php");
             $this->loadRoutesFrom(__DIR__."/routes/site/group.php");
+            $this->loadRoutesFrom(__DIR__."/routes/admin/price.php");
         }
 
         // Подключение шаблонов.
@@ -55,6 +57,7 @@ class SiteGroupPriceProvider extends ServiceProvider
         // Подключение метатегов.
         $seo = app()->config["seo-integration.models"];
         $seo["groups"] = Group::class;
+        $seo["prices"] = Price::class;
         app()->config["seo-integration.models"] = $seo;
 
         // Assets.

@@ -2,7 +2,6 @@
 
 namespace Notabenedev\SiteGroupPrice\Http\Controllers\Admin;
 
-use App\Folder;
 use App\Http\Controllers\Controller;
 use App\Meta;
 use Illuminate\Http\Request;

@@ -49,13 +49,13 @@ class GroupPriceMakeCommand extends BaseConfigModelCommand
      * The models to  be exported
      * @var array
      */
-    protected $models = ["Group"];
+    protected $models = ["Group", "Price"];
 
     /**
      * Make Controllers
      */
     protected $controllers = [
-        "Admin" => ["GroupController"],
+        "Admin" => ["GroupController", "PriceController"],
     ];
 
     /**
@@ -68,6 +68,11 @@ class GroupPriceMakeCommand extends BaseConfigModelCommand
             "title" => "Группы прайса",
             "slug" => "groups",
             "policy" => "GroupPolicy",
+        ],
+        [
+            "title" => "Цены прайса",
+            "slug" => "prices",
+            "policy" => "PricePolicy",
         ],
 
     ];
