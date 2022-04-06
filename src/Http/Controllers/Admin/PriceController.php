@@ -160,35 +160,66 @@ class PriceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Price  $price
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Price $price)
     {
-        //
+        $group = $price->group;
+
+        return view(
+            "site-group-price::admin.prices.edit",
+            compact("price", "group")
+        );
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Price  $price
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Price $price)
     {
-        //
+        $this->updateValidator($request->all(), $price);
+        // Обновление.
+        $price->update($request->all());
+
+        return redirect()
+            ->route("admin.prices.show", ["price" => $price])
+            ->with("success", "Обновлено");
     }
 
+    protected function updateValidator($data, Price $price)
+    {
+        $id = $price->id;
+        Validator::make($data, [
+            "title" => ["required", "max:150", "unique:prices,title,{$id}"],
+            "slug" => ["nullable", "max:150", "unique:prices,slug,{$id}"],
+            "price" => ["nullable", "max:150"],
+            "description" => ["nullable"],
+        ], [], [
+            "title" => "Заголовок",
+            "slug" => "Адресная строка",
+            "price" => "Цена",
+            "description" => "Описание",
+
+        ])->validate();
+    }
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Price $price
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Price $price)
     {
-        //
+        $group = $price->group;
+        $price->delete();
+        return redirect()
+            ->route("admin.groups.prices.index", ["group" => $group])
+            ->with("success", "Удалено");
     }
 
 
