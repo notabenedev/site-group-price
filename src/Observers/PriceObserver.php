@@ -25,7 +25,6 @@ class PriceObserver
      */
     public function updated(Price $price)
     {
-        $price->clearCache();
         PriceActions::forgetGroupPriceIds($price->group);
     }
 
@@ -36,8 +35,6 @@ class PriceObserver
      */
     public function deleted(Price $price)
     {
-        // Очистить кэш.
-        $price->clearCache();
         PriceActions::forgetGroupPriceIds($price->group);
     }
 

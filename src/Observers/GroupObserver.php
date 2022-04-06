@@ -53,8 +53,8 @@ class GroupObserver
         if (isset($original["parent_id"]) && $original["parent_id"] !== $group->parent_id) {
 
             if ((! $group->parent->published_at) && $group->published_at) {
-               //$group->publishCascade();
-                throw new PreventActionException("Невозможно изменить Группу, родитель не опубликован");
+               $group->publishCascade();
+                //throw new PreventActionException("Невозможно изменить Группу, родитель не опубликован");
             }
             $this->groupChangedParent($group, $original["parent_id"]);
         }
