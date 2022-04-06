@@ -37,7 +37,8 @@ class PriceController extends Controller
         }
 
         if (! empty($group)) {
-            $collection->where("group_id", $group->id);
+            $groups = GroupActions::getGroupChildren($group, true);
+            $collection->whereIn("group_id", $groups);
             $fromRoute = route("admin.groups.prices.index", ["group" => $group]);
         }else {
             $fromRoute = route("admin.prices.index");

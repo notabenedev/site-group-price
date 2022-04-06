@@ -51,7 +51,7 @@
                         <thead>
                         <tr>
                             <th>Заголовок</th>
-                            <th>Категория страницы</th>
+                            <th>Группа позиции</th>
                             <th>Цена</th>
                             @canany(["update", "view", "delete", "publish"], \App\Price::class)
                                 <th>Действия</th>
@@ -63,7 +63,7 @@
                             <tr>
                                 <td>{{ $item->title }}</td>
                                 <td>
-                                    <a href="{{ route("admin.groups.show", ["group" => $item->group]) }}" target="_blank">
+                                    <a href="{{ route("admin.groups.show", ["group" => $item->group]) }}">
                                         {{ $item->group->title }}
                                     </a>
                                 </td>
