@@ -27,6 +27,13 @@ class CreatePricesTable extends Migration
             $table->string('description')
                 ->nullable();
 
+            $table->string('priority')
+                ->default(1)
+                ->comment("Приоритет");
+
+            $table->unsignedBigInteger("group_id")
+                ->comment("Группа");
+
             $table->timestamps();
         });
     }

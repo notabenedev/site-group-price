@@ -10,7 +10,7 @@ return [
 
     "sitePackageName" => "Группы прайсов",
     "siteGroupsName" => "Группы",
-    "sitePriceName" => "Прайсы",
+    "sitePricesName" => "Позиции",
 
     "groupNest" => 4,
 

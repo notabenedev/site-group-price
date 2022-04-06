@@ -83,14 +83,14 @@
                         </li>
                     @endcan
 
-{{--                    @can("viewAny", \App\Price::class)--}}
-{{--                        <li class="nav-item">--}}
-{{--                            <a href="{{ route("admin.groups.prices.index", ["group" => $group]) }}"--}}
-{{--                               class="nav-link{{ strstr($currentRoute, "prices.") !== false ? " active" : "" }}">--}}
-{{--                                {{ config("site-group-price.sitePriceName") }}--}}
-{{--                            </a>--}}
-{{--                        </li>--}}
-{{--                    @endcan--}}
+                    @can("viewAny", \App\Price::class)
+                        <li class="nav-item">
+                            <a href="{{ route("admin.groups.prices.index", ["group" => $group]) }}"
+                               class="nav-link{{ strstr($currentRoute, "prices.") !== false ? " active" : "" }}">
+                                {{ config("site-group-price.sitePricesName") }}
+                            </a>
+                        </li>
+                    @endcan
 
                     @can("delete", $group)
                         <li class="nav-item">

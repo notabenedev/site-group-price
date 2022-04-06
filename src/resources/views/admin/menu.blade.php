@@ -25,6 +25,12 @@
                         <span>{{ config("site-group-price.siteGroupsName") }}</span>
                     </a>
                 @endcan
+                @can("viewAny", \App\Price::class)
+                        <a href="{{ route("admin.prices.index") }}"
+                           class="collapse-item{{ strstr($currentRoute, ".prices.") !== false ? " active" : "" }}">
+                            <span>{{ config("site-group-price.sitePricesName") }}</span>
+                        </a>
+                @endcan
 
             </div>
         </div>
@@ -47,6 +53,12 @@
                 <a href="{{ route("admin.groups.index") }}"
                    class="dropdown-item">
                     {{ config("site-group-price.siteGroupsName") }}
+                </a>
+            @endcan
+            @can("viewAny", \App\Price::class)
+                <a href="{{ route("admin.prices.index") }}"
+                   class="dropdown-item">
+                    {{ config("site-group-price.sitePricesName") }}
                 </a>
             @endcan
 

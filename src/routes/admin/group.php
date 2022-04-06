@@ -8,7 +8,19 @@ Route::group([
     "as" => "admin.",
     "prefix" => "admin",
 ], function () {
-    Route::resource( "groups" , GroupController::class);
+    //Route::resource( "groups" , GroupController::class);
+    Route::group([
+        "prefix" => config("site-group-price.groupUrlName"),
+        "as" => "groups.",
+    ],function (){
+        Route::get("/", [GroupController::class, "index"])->name("index");
+        Route::get("/create", [GroupController::class, "create"])->name("create");
+        Route::post("", [GroupController::class, "store"])->name("store");
+        Route::get("/{group}", [GroupController::class, "show"])->name("show");
+        Route::get("/{group}/edit", [GroupController::class, "edit"])->name("edit");
+        Route::put("/{group}", [GroupController::class, "update"])->name("update");
+        Route::delete("/{group}", [GroupController::class, "destroy"])->name("destroy");
+    });
 
     // Изменить вес у категорий.
     Route::put(config("site-group-price.groupUrlName")."/tree/priority", [GroupController::class,"changeItemsPriority"])
