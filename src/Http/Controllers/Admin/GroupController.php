@@ -20,6 +20,7 @@ class GroupController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
@@ -41,6 +42,7 @@ class GroupController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param  \App\Group  $group
      * @return \Illuminate\Http\Response
      */
     public function create(Group $group = null)
@@ -54,6 +56,7 @@ class GroupController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  Group  $group
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, Group $group = null)

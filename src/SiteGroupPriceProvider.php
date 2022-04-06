@@ -77,5 +77,9 @@ class SiteGroupPriceProvider extends ServiceProvider
             $class = config("site-group-price.groupFacade");
             return new $class;
         });
+        $this->app->singleton("price-actions", function () {
+            $class = config("site-group-price.priceFacade");
+            return new $class;
+        });
     }
 }

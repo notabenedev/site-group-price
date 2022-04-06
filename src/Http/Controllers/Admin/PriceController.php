@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Price;
 use App\Group;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Notabenedev\SiteGroupPrice\Facades\GroupActions;
+use Notabenedev\SiteGroupPrice\Facades\PriceActions;
 
 class PriceController extends Controller
 {
@@ -19,6 +21,8 @@ class PriceController extends Controller
     /**
      * Display a listing of the resource.
      *
+     *  @param  \Illuminate\Http\Request  $request
+     *  @param  \App\Group  $group
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request, Group $group = null)
@@ -62,34 +66,95 @@ class PriceController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param  \App\Group  $group
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Group $group)
     {
-        //
+        return view(
+            "site-group-price::admin.prices.create",
+            compact("group")
+        );
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Group  $group
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Group $group)
     {
-        //
+        $this->storeValidator($request->all());
+        $price = $group->prices()->create($request->all());
+        /**
+         * @var Price $price
+         */
+        return redirect()
+            ->route("admin.prices.show", ["price" => $price])
+            ->with("success", "Добавлено");
+    }
+
+    protected function storeValidator($data)
+    {
+        Validator::make($data, [
+            "title" => ["required", "max:150", "unique:prices,title"],
+            "slug" => ["nullable", "max:150", "unique:prices,slug"],
+            "price" => ["nullable", "max:150"],
+            "description" => ["nullable"],
+        ], [], [
+            "title" => "Заголовок",
+            "slug" => "Адресная строка",
+            "price" => "Цена",
+            "description" => "Описание",
+        ])->validate();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Price $price
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Price $price)
     {
-        //
+        $group = $price->group;
+        $groups = GroupActions::getAllList();
+        return view(
+            "site-group-price::admin.prices.show",
+            compact("price", "group", "groups")
+        );
     }
+
+    /**
+     * Изменить категорию
+     *
+     * @param Request $request
+     * @param Price $price
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function changeGroup(Request $request, Price $price)
+    {
+        $this->authorize("update", $price);
+        $this->changeGroupValidator($request->all());
+        PriceActions::changeGroup($price, $request->get("group_id"));
+        return redirect()
+            ->route("admin.prices.show", ["price" => $price])
+            ->with("success", "Категория изменена");
+    }
+
+
+    protected function changeGroupValidator($data)
+    {
+        Validator::make($data, [
+            "group_id" => "required|exists:groups,id",
+        ], [], [
+            "group_id" => "Группа",
+        ])->validate();
+    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -124,4 +189,6 @@ class PriceController extends Controller
     {
         //
     }
+
+
 }

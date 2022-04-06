@@ -95,13 +95,6 @@ class Group extends Model
         $collection = $children->get();
         $parentPublished = $this->isParentPublished();
 
-        //group price
-//        $prices = $this->prices()->get();
-//        foreach ($prices as $price) {
-//            if ($published || !$parentPublished)
-//                $price->publish();
-//        }
-
         // child groups
         if ($collection->count() > 0) {
 
@@ -135,5 +128,14 @@ class Group extends Model
             return redirect()
                 ->back();
         }
+    }
+    /**
+     * Group prices
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function prices()
+    {
+        return $this->hasMany(\App\Price::class);
     }
 }

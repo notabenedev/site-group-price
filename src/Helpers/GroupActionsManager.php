@@ -284,14 +284,14 @@ class GroupActionsManager
             "url" => route("admin.groups.show", ["group" => $group]),
             "active" => $active,
         ];
-//        if ($isPricePage) {
-//            $page = $routeParams["page"];
-//            $breadcrumb[] = (object) [
-//                "title" => $page->title,
-//                "url" => route("admin.prices.show", ["page" => $page]),
-//                "active" => true,
-//            ];
-//        }
+        if ($isPricePage) {
+            $price = $routeParams["price"];
+            $breadcrumb[] = (object) [
+                "title" => $price->title,
+                "url" => route("admin.prices.show", ["price" => $price]),
+                "active" => true,
+            ];
+        }
         return $breadcrumb;
     }
 }

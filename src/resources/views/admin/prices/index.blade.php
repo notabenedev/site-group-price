@@ -6,7 +6,7 @@
     @empty($group)
         {{ config("site-group-price.sitePricesName") }}
     @else
-        {{ $group->title }}
+        {{ $group->title }} - {{ config("site-group-price.sitePricesName") }}
     @endempty
 @endsection
 
@@ -51,9 +51,8 @@
                         <thead>
                         <tr>
                             <th>Заголовок</th>
-                            @empty($group)
-                                <th>Категория страницы</th>
-                            @endempty
+                            <th>Категория страницы</th>
+                            <th>Цена</th>
                             @canany(["update", "view", "delete", "publish"], \App\Price::class)
                                 <th>Действия</th>
                             @endcanany
@@ -63,14 +62,15 @@
                         @foreach ($prices as $item)
                             <tr>
                                 <td>{{ $item->title }}</td>
-                                @empty($group)
-                                    <td>
-                                        <a href="{{ route("admin.groups.show", ["group" => $item->group]) }}" target="_blank">
-                                            {{ $item->group->title }}
-                                        </a>
-                                    </td>
-                                @endempty
-                                @canany(["update", "view", "delete", "publish"], $item)
+                                <td>
+                                    <a href="{{ route("admin.groups.show", ["group" => $item->group]) }}" target="_blank">
+                                        {{ $item->group->title }}
+                                    </a>
+                                </td>
+                                <td>
+                                    {{ $item->price }}
+                                </td>
+                                @canany(["update", "view", "delete"], $item)
                                     <td>
                                         <div role="toolbar" class="btn-toolbar">
                                             <div class="btn-group mr-1">
@@ -90,30 +90,9 @@
                                                     </button>
                                                 @endcan
                                             </div>
-                                            @can("update", $item)
-                                                <div class="btn-group">
-                                                    <button type="button"
-                                                            class="btn btn-{{ $item->published_at ? "success" : "secondary" }}"
-                                                            data-confirm="{{ "change-published-form-{$item->id}" }}">
-                                                        <i class="fas fa-toggle-{{ $item->published_at ? "on" : "off" }}"></i>
-                                                    </button>
-                                                </div>
-                                            @endcan
+
                                         </div>
-                                        @can("update", $item)
-                                            <confirm-form :id="'{{ "change-published-form-{$item->id}" }}'"
-                                                          confirm-text="Да, изменить!"
-                                                          text="Это изменит статус отображения на сайте! Невозможно опубликовать страницу, если не опубликована категория.">
-                                                <template>
-                                                    <form id="change-published-form-{{ $item->id }}"
-                                                          action="{{ route("admin.prices.publish", ['price' => $item]) }}"
-                                                          method="post">
-                                                        @method('put')
-                                                        @csrf
-                                                    </form>
-                                                </template>
-                                            </confirm-form>
-                                        @endcan
+
                                         @can("delete", $item)
                                             <confirm-form :id="'{{ "delete-form-{$item->id}" }}'">
                                                 <template>

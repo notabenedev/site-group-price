@@ -34,14 +34,6 @@ Route::group([
         Route::put("", [PriceController::class, "update"])->name("update");
         Route::delete("", [PriceController::class, "destroy"])->name("destroy");
 
-        //опубликовать
-        Route::put("publish", [PriceController::class,"publish"])
-            ->name("publish");
-
-        // Meta.
-        Route::get("metas", [PriceController::class,"metas"])
-            ->name("metas");
-
         // Изменение категории.
         Route::put("change-group", [PriceController::class,"changeGroup"])
             ->name("change-group");

@@ -4,6 +4,7 @@ return [
     "groupSiteRoutes" => true,
 
     "groupFacade" => \Notabenedev\SiteGroupPrice\Helpers\GroupActionsManager::class,
+    "priceFacade" => \Notabenedev\SiteGroupPrice\Helpers\PriceActionsManager::class,
 
     "onePage" => true,
     "siteBreadcrumbs" => false,

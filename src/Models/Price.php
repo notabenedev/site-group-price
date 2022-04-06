@@ -32,4 +32,17 @@ class Price extends Model
         return $this->belongsTo(\App\Group::class);
     }
 
+    /**
+     * Изменить дату создания.
+     *
+     * @param $value
+     * @return string
+     */
+    public function getCreatedAtAttribute($value)
+    {
+        return datehelper()->changeTz($value);
+    }
+
+
+
 }

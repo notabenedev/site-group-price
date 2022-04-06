@@ -45,26 +45,6 @@
                                 Редактировать
                             </a>
                         </li>
-
-                        <li class="nav-item">
-                            <a href="{{ route("admin.prices.gallery", ["price" => $price]) }}"
-                               class="nav-link{{ $currentRoute === "admin.prices.gallery" ? " active" : "" }}">
-                                Галерея
-                            </a>
-                        </li>
-                    @endcan
-
-
-
-                    @can("viewAny", \App\Meta::class)
-                        @can("update", $price)
-                            <li class="nav-item">
-                                <a href="{{ route("admin.prices.metas", ["price" => $price]) }}"
-                                   class="nav-link{{ $currentRoute === "admin.prices.metas" ? " active" : "" }}">
-                                    Метатеги
-                                </a>
-                            </li>
-                        @endcan
                     @endcan
 
                     @can("delete", $price)
