@@ -62,7 +62,7 @@ class GroupController extends Controller
     public function store(Request $request, Group $group = null)
     {
         $this->storeValidator($request->all());
-        if (empty($folder)) {
+        if (empty($group)) {
             $item = Group::create($request->all());
         }
         else {
@@ -179,12 +179,24 @@ class GroupController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Group $group
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Group $group)
     {
-        //
+        $parent = $group->parent;
+
+        $group->delete();
+        if ($parent) {
+            return redirect()
+                ->route("admin.groups.show", ["group" => $parent])
+                ->with("success", "Успешно удалено");
+        }
+        else {
+            return redirect()
+                ->route("admin.groups.index")
+                ->with("success", "Успешно удалено");
+        }
     }
 
     /**

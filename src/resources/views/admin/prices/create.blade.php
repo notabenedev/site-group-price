@@ -44,11 +44,12 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="price">Цена</label>
+                        <label for="price">Цена <span class="text-danger">*</span></label>
                         <input type="text"
                                id="price"
                                name="price"
                                maxlength="150"
+                               required
                                value="{{ old('price') }}"
                                class="form-control @error("price") is-invalid @enderror">
                         @error("price")

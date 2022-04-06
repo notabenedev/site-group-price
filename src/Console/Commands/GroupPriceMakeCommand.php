@@ -18,6 +18,7 @@ class GroupPriceMakeCommand extends BaseConfigModelCommand
      {--all : Run all}
      {--menu : Config menu}
      {--models : Export models}
+     {--observers : Export observers}
      {--controllers : Export controllers}
      {--policies : Export and create rules} 
      {--vue : Export vue}
@@ -50,6 +51,14 @@ class GroupPriceMakeCommand extends BaseConfigModelCommand
      * @var array
      */
     protected $models = ["Group", "Price"];
+
+    /**
+     * Создание наблюдателей
+     *
+     * @var array
+     */
+    protected $observers = ["GroupObserver", "PriceObserver"];
+
 
     /**
      * Make Controllers
@@ -118,6 +127,10 @@ class GroupPriceMakeCommand extends BaseConfigModelCommand
 
         if ($this->option("models") || $all) {
             $this->exportModels();
+        }
+
+        if ($this->option("observers") || $all) {
+            $this->exportObservers();
         }
 
         if ($this->option("controllers") || $all) {

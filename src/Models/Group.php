@@ -83,7 +83,7 @@ class Group extends Model
     }
 
     /**
-     * Change publish status all children and price
+     * Change publish status all children
      *
      */
 
@@ -95,7 +95,7 @@ class Group extends Model
         $collection = $children->get();
         $parentPublished = $this->isParentPublished();
 
-        // child groups
+        // for parents groups
         if ($collection->count() > 0) {
 
             //unpublished group and child groups
@@ -104,7 +104,8 @@ class Group extends Model
                 $this->save();
 
                 foreach ($collection as $child) {
-                    $this->publish($child);
+                    $child->published_at = null;
+                    $child->save();
                 }
 
             } else {
@@ -116,7 +117,7 @@ class Group extends Model
                     ->back();
 
         }
-        // leaf groups
+        // for leaf groups
         else {
             //can't publish the leaf when parent is unpublished
             if (!$published  && !$parentPublished) {

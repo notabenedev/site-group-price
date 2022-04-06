@@ -4,8 +4,13 @@ namespace Notabenedev\SiteGroupPrice;
 
 use App\Group;
 use App\Price;
+use App\Observers\Vendor\SiteGroupPrice\GroupObserver;
+use App\Observers\Vendor\SiteGroupPrice\PriceObserver;
+
 use Illuminate\Support\ServiceProvider;
 use Notabenedev\SiteGroupPrice\Console\Commands\GroupPriceMakeCommand;
+use Notabenedev\SiteGroupPrice\Events\GroupChangePosition;
+use Notabenedev\SiteGroupPrice\Listeners\GroupIdsInfoClearCache;
 
 class SiteGroupPriceProvider extends ServiceProvider
 {
@@ -65,7 +70,11 @@ class SiteGroupPriceProvider extends ServiceProvider
             __DIR__ . '/resources/js/components' => resource_path('js/components/vendor/site-group-price'),
         ], 'public');
 
+        // Events
+        $this->addEvents();
 
+        // Наблюдатели.
+        $this->addObservers();
     }
 
     /**
@@ -81,5 +90,28 @@ class SiteGroupPriceProvider extends ServiceProvider
             $class = config("site-group-price.priceFacade");
             return new $class;
         });
+    }
+
+    /**
+     * Подключение Events.
+     */
+
+    protected function addEvents()
+    {
+        // Изменение позиции группы.
+        $this->app["events"]->listen(GroupChangePosition::class, GroupIdsInfoClearCache::class);
+    }
+
+    /**
+     * Добавление наблюдателей.
+     */
+    protected function addObservers()
+    {
+        if (class_exists(GroupObserver::class) && class_exists(Group::class)) {
+            Group::observe(GroupObserver::class);
+        }
+        if (class_exists(PriceObserver::class) && class_exists(Price::class)) {
+            Price::observe(PriceObserver::class);
+        }
     }
 }
