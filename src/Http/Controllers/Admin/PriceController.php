@@ -222,5 +222,26 @@ class PriceController extends Controller
             ->with("success", "Удалено");
     }
 
+    /**
+     * Tree
+     *
+     * @param Group $group
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     *
+     */
 
+    public function tree(Group $group)
+    {
+        $this->authorize("update", Price::class);
+        $collection = $group->prices()->orderBy("priority")->get();
+        $groups = [];
+        foreach ($collection as $item) {
+            $groups[] = [
+                "name" => $item->title,
+                "id" => $item->id,
+            ];
+        }
+        return view ("site-group-price::admin.prices.tree", ["groups" => $groups, "group" => $group]);
+    }
 }
