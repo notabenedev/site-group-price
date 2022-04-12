@@ -26,9 +26,11 @@
                         <dt class="col-sm-3">Информация</dt>
                         <dd class="col-sm-9">{!! $group->info !!}</dd>
                     @endif
-                    @if ($group->nested)
-                        <dt class="col-sm-3">Раскрыть все вложенные группы</dt>
-                        <dd class="col-sm-9">Да</dd>
+                        @if(! config("site-group-price.onePage", false))
+                            @if ($group->nested)
+                            <dt class="col-sm-3">Раскрыть все вложенные группы</dt>
+                            <dd class="col-sm-9">Да</dd>
+                            @endif
                     @endif
                     @if ($group->parent)
                         <dt class="col-sm-3">Родитель</dt>

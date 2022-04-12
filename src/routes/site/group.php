@@ -9,5 +9,6 @@ Route::group([
     "prefix" => config("site-group-price.groupUrlName"),
 ], function () {
     Route::get("/", "GroupController@index")->name("index");
-    Route::get("/{group}", "GroupController@show")->name("show");
+    if (config("site-group-price.onePage", false))
+        Route::get("/{group}", "GroupController@show")->name("show");
 });

@@ -96,19 +96,21 @@
                         @enderror
                     </div>
 
-                    <div class="form-group">
-                        <div class="custom-control custom-checkbox">
-                            <input class="custom-control-input"
+                    @if(! config("site-group-price.onePage", false))
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input class="custom-control-input"
                                        type="checkbox"
                                        {{ ( old("nested", "")) ? "checked" : "" }}
                                        value="true"
                                        id="nested"
                                        name="nested">
-                            <label class="custom-control-label" for="nested">
-                                   Раскрыть все вложенные группы
-                            </label>
+                                <label class="custom-control-label" for="nested">
+                                    Раскрыть все вложенные группы
+                                </label>
+                            </div>
                         </div>
-                    </div>
+                    @endif
 
                     <div class="btn-group"
                          role="group">

@@ -5,7 +5,9 @@
             <th>Заголовок</th>
             <th>Адресная строка</th>
             <th>Дочерние</th>
-            <th>Раскрыть</th>
+            @if(! config("site-group-price.onePage", false))
+                <th>Раскрыть</th>
+            @endif
             @canany(["edit", "view", "delete"], \App\Group::class)
                 <th>Действия</th>
             @endcanany
@@ -17,7 +19,9 @@
                 <td>{{ $item->title }}</td>
                 <td>{{ $item->slug }}</td>
                 <td>{{ $item->children->count() }}</td>
-                <td>{{ $item->nested ? "Да" : "Нет" }}</td>
+                @if(! config("site-group-price.onePage", false))
+                    <td>{{ $item->nested ? "Да" : "Нет" }}</td>
+                @endif
                 @canany(["edit", "view", "delete"], \App\Group::class)
                     <td>
                         <div role="toolbar" class="btn-toolbar">
