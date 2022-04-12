@@ -182,7 +182,7 @@ class GroupActionsManager
     protected function makeTreeDataWithNoParent()
     {
         $groups = DB::table("groups")
-            ->select("id", "title", "slug", "parent_id", "priority")
+            ->select("id", "title", "slug", "short", "description", "accent", "info", "parent_id", "priority", "nested")
             ->orderBy("parent_id")
             ->get();
 
@@ -192,6 +192,10 @@ class GroupActionsManager
             $tree[$group->id] = [
                 "title" => $group->title,
                 'slug' => $group->slug,
+                'short' => $group->short,
+                'description' => $group->description,
+                'accent' => $group->accent,
+                'info' => $group->info,
                 'parent' => $group->parent_id,
                 "priority" => $group->priority,
                 "id" => $group->id,
@@ -294,4 +298,22 @@ class GroupActionsManager
         }
         return $breadcrumb;
     }
+
+    /**
+     * Get root groups
+     *
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     */
+
+    public function getRootGroups(){
+
+        $rootGroups = Group::query()
+            ->whereNull("parent_id")
+            ->whereNotNull('published_at')
+            ->orderBy("priority")
+            ->get();
+
+        return $rootGroups;
+    }
+
 }

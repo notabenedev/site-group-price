@@ -65,6 +65,7 @@ class GroupPriceMakeCommand extends BaseConfigModelCommand
      */
     protected $controllers = [
         "Admin" => ["GroupController", "PriceController"],
+        "Site" => ["GroupController"],
     ];
 
     /**
@@ -135,6 +136,7 @@ class GroupPriceMakeCommand extends BaseConfigModelCommand
 
         if ($this->option("controllers") || $all) {
             $this->exportControllers("Admin");
+            $this->exportControllers("Site");
         }
 
         if ($this->option('menu') || $all) {

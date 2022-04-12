@@ -43,19 +43,20 @@ class PriceActionsManager
 
     }
     /**
-     * Получить id страниц категории, либо категории и подкатегорий.
+     * Получить id позиций группы, либо  группы и подгруппы.
      *
-     * @param Group $group
+     * @param int $groupId
      * @param $includeSubs
      * @return mixed
      */
-    public function getGroupPageIds(Group $group, $includeSubs = false)
+    public function getGroupPrice($groupId, $includeSubs = false)
     {
-        $key = "price-actions-getGroupPriceIds:{$group->id}";
+        $group = Group::query()->where("id","=",$groupId)->first();
+        $key = "price-actions-getGroupPrice:{$group->id}";
         $key .= $includeSubs ? "-true" : "-false";
         return Cache::rememberForever($key, function() use ($group, $includeSubs) {
             $query = Price::query()
-                ->select("id")
+                ->select("title", "id", "slug", "price", "description")
                 ->orderBy("priority");
             if ($includeSubs) {
                 $query->whereIn("group_id", GroupActions::getGroupChildren($group, true));
@@ -64,11 +65,13 @@ class PriceActionsManager
                 $query->where("group_id", $group->id);
             }
             $prices = $query->get();
-            $pIds = [];
-            foreach ($prices as $price) {
-                $pIds[] = $price->id;
+
+            $items = [];
+            foreach ($prices as $item) {
+                $items[$item->id] = $item;
             }
-            return $pIds;
+
+            return $items;
         });
     }
 
@@ -77,13 +80,13 @@ class PriceActionsManager
      *
      * @param Group $group
      */
-    public function forgetGroupPriceIds(Group $group)
+    public function forgetGroupPrice(Group $group)
     {
-        $key = "price-actions-getGroupPriceIds:{$group->id}";
+        $key = "price-actions-getGroupPrice:{$group->id}";
         Cache::forget("$key-true");
         Cache::forget("$key-false");
         if (! empty($group->parent_id)) {
-            $this->forgetGroupPriceIds($group->parent);
+            $this->forgetGroupPrice($group->parent);
         }
     }
 
