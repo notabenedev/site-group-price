@@ -18,6 +18,7 @@ class Group extends Model
         "description",
         "accent",
         "info",
+        "nested",
     ];
     protected $metaKey = "groups";
 

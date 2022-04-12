@@ -6,7 +6,6 @@ return [
     "groupFacade" => \Notabenedev\SiteGroupPrice\Helpers\GroupActionsManager::class,
     "priceFacade" => \Notabenedev\SiteGroupPrice\Helpers\PriceActionsManager::class,
 
-    "onePage" => true,
     "siteBreadcrumbs" => false,
 
     "sitePackageName" => "Группы прайсов",
@@ -14,6 +13,7 @@ return [
     "sitePricesName" => "Позиции",
 
     "groupNest" => 4,
+    "onePage" => true,
 
     "groupUrlName" => "prices",
     "priceUrlName" => "price",

@@ -61,6 +61,11 @@ class GroupController extends Controller
      */
     public function store(Request $request, Group $group = null)
     {
+        if(!$request->has('nested'))
+            $request->merge(['nested' => false]);
+        else
+            $request->merge(['nested' => true]);
+
         $this->storeValidator($request->all());
         if (empty($group)) {
             $item = Group::create($request->all());
@@ -89,12 +94,14 @@ class GroupController extends Controller
             "short" => ["nullable", "max:500"],
             "accent" => ["nullable", "max:500"],
             "info" => ["nullable"],
+            "nested" => ["nullable"],
         ], [], [
             "title" => "Заголовок",
             "slug" => "Адресная строка",
             "short" => "Краткое описание",
             "accent" => "Акцент",
             "info" => "Информация",
+            "nested" => "Раскрыть Вложенные",
         ])->validate();
     }
 
@@ -143,8 +150,14 @@ class GroupController extends Controller
      */
     public function update(Request $request, Group $group)
     {
+        if(!$request->has('nested'))
+            $request->merge(['nested' => false]);
+        else
+            $request->merge(['nested' => true]);
+
         $this->updateValidator($request->all(), $group);
         $group->update($request->all());
+
         return redirect()
             ->route("admin.groups.show", ["group" => $group])
             ->with("success", "Успешно обновлено");
@@ -166,12 +179,14 @@ class GroupController extends Controller
             "short" => ["nullable", "max:500"],
             "accent" => ["nullable", "max:500"],
             "info" => ["nullable"],
+            "nested" => ["nullable"],
         ], [], [
             "title" => "Заголовок",
             "slug" => "Адресная строка",
             "short" => "Краткое описание",
             "accent" => "Акцент",
             "info" => "Информация",
+            "nested" => "Раскрыть Вложенные",
         ])->validate();
     }
 

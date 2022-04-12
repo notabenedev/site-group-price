@@ -18,13 +18,21 @@
 ## Description
 
 ## Config
- 
-    "onePage" => true, false - вывод прайса на одной странице
+    
+    "groupAdminRoutes" => true, false
+    "groupSiteRoutes" => true, false
+    
+    "groupFacade" => переопределение фасада групп (::class)
+    "priceFacade" => переопределение фасада позиций (::class)
+    
     "sitePackageName" => Название пакета
-    "siteGroupName" => Название групп прайсов
-    "sitePriceName" => Название прайса
-
-    "groupNest" => число - вложенность групп прайсов,
-
+    
+    "sitePackageName" => Название пакета,
+    "siteGroupsName" =>  Название групп прайсов
+    "sitePricesName" => Название позиций прайса
+    
+    "groupNest" => число (вложенность групп прайсов),
+    "onePage" => true, false -Ракрытие всех групп и позиций на одной странице
+     
     "groupUrlName" => url групп прайсов
     "priceUrlName" => url прайса
