@@ -12,10 +12,13 @@ return [
     "siteGroupsName" => "Группы",
     "sitePricesName" => "Позиции",
 
+    "sitePriceHeaderTitleName" => "Наименование услуги",
+    "sitePriceHeaderPriceName" => "Цена (в рублях)",
+
     "groupNest" => 4,
     "onePage" => true,
 
-    "groupUrlName" => "prices",
-    "priceUrlName" => "price",
+    "groupUrlName" => "price",
+    "priceUrlName" => "position",
 
 ];

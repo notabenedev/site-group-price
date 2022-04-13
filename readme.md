@@ -30,6 +30,8 @@
     "sitePackageName" => Название пакета,
     "siteGroupsName" =>  Название групп прайсов
     "sitePricesName" => Название позиций прайса
+    "sitePriceHeaderTitleName" => Название столбика с заголовком позиции прайса
+    "sitePriceHeaderPriceName" => Название столбика с ценой позиции прайса
     
     "groupNest" => число (вложенность групп прайсов),
     "onePage" => true, false -Ракрытие всех групп и позиций на одной странице

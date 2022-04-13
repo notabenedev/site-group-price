@@ -68,6 +68,7 @@ class SiteGroupPriceProvider extends ServiceProvider
         // Assets.
         $this->publishes([
             __DIR__ . '/resources/js/components' => resource_path('js/components/vendor/site-group-price'),
+            __DIR__ . "/resources/sass" => resource_path("sass/vendor/site-group-price"),
         ], 'public');
 
         // Events

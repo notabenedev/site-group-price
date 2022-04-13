@@ -1,0 +1,91 @@
+.price{
+
+  &__menu{
+
+    &-item{
+
+      &_link{
+        font-size: 1.25rem;
+        font-weight: bold;
+      }
+    }
+  }
+
+  &__header{
+    margin: 1.25rem 0;
+    padding: 0.25rem 0;
+    background-color: $primary;
+    color: $white;
+    border-radius: $border-radius;
+
+    &-title{
+    }
+
+    &-price{
+      text-align: center;
+    }
+  }
+
+  &__group{
+
+    margin: $grid-gutter-width 0;
+
+    &-title{
+      &_level-1{
+        color: $primary;
+        font-weight: bold;
+        margin-bottom: 1.25rem;
+        font-size: 1.625rem;
+      }
+
+    }
+
+    &-short{
+      padding: 0.5rem 0;
+
+    }
+
+    &-description{
+      padding: 1.25rem;
+      margin: 0 -0.5*$grid-gutter-width;
+      background-color: lighten($primary, 20%);
+    }
+
+    &-accent{
+      padding: 1.25rem 0.5rem;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    &-info{
+    }
+
+
+    &-item{
+    }
+  }
+
+  &__list {
+    font-size: 1.125rem;
+    padding-top: 0.875rem;
+    padding-bottom: 0.875rem;
+
+    &-iteration{
+      background-color: lighten($secondary, 50%);
+    }
+
+    &-title{
+    }
+
+    &-description{
+    }
+
+    &-price{
+      text-align: center;
+      color: $primary;
+      font-weight: bold;
+    }
+
+  }
+
+}

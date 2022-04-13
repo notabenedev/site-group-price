@@ -7,14 +7,14 @@
 @endsection
 
 @section('content')
-    <div class="col-12 col-lg-8">
+    <div class="col-12">
         @if (config("site-group-price.siteHeadersShow", true))
             <div class="row price__header">
-                <div class="col-12 col-sm-7 col-md-8 col-lg-9 ">
-                    {{ config("site-group-price.siteHeadersTitle", 'Наименование') }}
+                <div class="col-12 col-sm-7 col-md-8 col-lg-9 price__header-title">
+                    {{ config("site-group-price.sitePriceHeaderTitleName", 'Наименование') }}
                 </div>
-                <div class="col-12 col-sm-5 col-md-4 col-lg-3 text-sm-right">
-                    {{ config("site-group-price.siteHeadersTitle", 'Цена (в рублях)') }}
+                <div class="col-12 col-sm-5 col-md-4 col-lg-3 price__header-price">
+                    {{ config("site-group-price.sitePriceHeaderPriceName", 'Цена (в рублях)') }}
                 </div>
             </div>
         @endif
@@ -26,17 +26,14 @@
                 </div>
             @endforeach
     </div>
-    <div class="col-12 col-lg-4">
-
-    </div>
 @endsection
 
 @if (config("site-group-price.onePage",true))
 @section("sidebar")
-    <ul class="list-unstyled price-menu">
+    <ul class="list-unstyled price__menu">
         @foreach($rootGroups as $key => $item)
-            <li class="price-menu__item">
-                <a class="price-menu__item-link" href="#{{ $item["slug"] }}">{{ $item["title"] }}</a>
+            <li class="price__menu-item">
+                <a class="price__menu-item_link" href="#{{ $item["slug"] }}">{{ $item["title"] }}</a>
             </li>
         @endforeach
     </ul>

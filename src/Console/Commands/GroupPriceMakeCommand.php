@@ -22,6 +22,7 @@ class GroupPriceMakeCommand extends BaseConfigModelCommand
      {--controllers : Export controllers}
      {--policies : Export and create rules} 
      {--vue : Export vue}
+     {--scss : Export scss}
      {--only-default : Create only default rules}
      ';
 
@@ -105,6 +106,17 @@ class GroupPriceMakeCommand extends BaseConfigModelCommand
         'app' => [],
     ];
 
+    /**
+     * Стили.
+     *
+     * @var array
+     */
+    protected $scssIncludes = [
+        "app" => [
+            "site-group-price/price",
+        ],
+    ];
+
 
     /**
      * Create a new command instance.
@@ -151,6 +163,10 @@ class GroupPriceMakeCommand extends BaseConfigModelCommand
         if ($this->option("vue") || $all) {
             $this->makeVueIncludes("admin");
             $this->makeVueIncludes("app");
+        }
+
+        if ($this->option("scss") || $all) {
+            $this->makeScssIncludes("app");
         }
 
     }
