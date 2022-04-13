@@ -100,7 +100,7 @@ class PriceController extends Controller
     protected function storeValidator($data)
     {
         Validator::make($data, [
-            "title" => ["required", "max:150", "unique:prices,title"],
+            "title" => ["required", "max:150"],
             "slug" => ["nullable", "max:150", "unique:prices,slug"],
             "price" => ["nullable", "max:150"],
             "description" => ["nullable"],
@@ -195,7 +195,7 @@ class PriceController extends Controller
     {
         $id = $price->id;
         Validator::make($data, [
-            "title" => ["required", "max:150", "unique:prices,title,{$id}"],
+            "title" => ["required", "max:150"],
             "slug" => ["nullable", "max:150", "unique:prices,slug,{$id}"],
             "price" => ["nullable", "max:150"],
             "description" => ["nullable"],
