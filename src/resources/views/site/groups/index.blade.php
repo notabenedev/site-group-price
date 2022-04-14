@@ -6,8 +6,14 @@
        {{ config("site-group-price.sitePackageName","Прайс ") }}
 @endsection
 
+@if (! config("site-group-price.onePage",false))
+@section("sidebar")
+    @include('site-group-price::site.groups.includes.sidebar')
+@endsection
+@endif
+
 @section('content')
-    <div class="col-12">
+    <div class="col-12 col-lg-8">
         @if (config("site-group-price.siteHeadersShow", true))
             <div class="row price__header">
                 <div class="col-12 col-sm-7 col-md-8 col-lg-9 price__header-title">
@@ -26,16 +32,10 @@
                 </div>
             @endforeach
     </div>
+    @if (config("site-group-price.onePage",true))
+        <div class="col-12 col-lg-4">
+        @include('site-group-price::site.groups.includes.sidebar-one-page')
+        </div>
+    @endif
 @endsection
 
-@if (config("site-group-price.onePage",true))
-@section("sidebar")
-    <ul class="list-unstyled price__menu">
-        @foreach($rootGroups as $key => $item)
-            <li class="price__menu-item">
-                <a class="price__menu-item_link" href="#{{ $item["slug"] }}">{{ $item["title"] }}</a>
-            </li>
-        @endforeach
-    </ul>
-@endsection
-@endif

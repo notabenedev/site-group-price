@@ -2,6 +2,10 @@
 
 namespace Notabenedev\SiteGroupPrice;
 
+use App\Filters\PriceSide;
+use App\Filters\PriceSideLg;
+use App\Filters\PriceSideMd;
+use App\Filters\PriceSideXl;
 use App\Group;
 use App\Price;
 use App\Observers\Vendor\SiteGroupPrice\GroupObserver;
@@ -65,6 +69,9 @@ class SiteGroupPriceProvider extends ServiceProvider
         $seo["prices"] = Price::class;
         app()->config["seo-integration.models"] = $seo;
 
+        // Шаблоны изображений
+        $this->extendImages();
+
         // Assets.
         $this->publishes([
             __DIR__ . '/resources/js/components' => resource_path('js/components/vendor/site-group-price'),
@@ -114,5 +121,20 @@ class SiteGroupPriceProvider extends ServiceProvider
         if (class_exists(PriceObserver::class) && class_exists(Price::class)) {
             Price::observe(PriceObserver::class);
         }
+    }
+
+    /**
+     * Стили для изображений.
+     */
+    private function extendImages()
+    {
+        $imagecache = app()->config['imagecache.templates'];
+
+        $imagecache['price-side'] = PriceSide::class;
+        $imagecache['price-side-xl'] = PriceSideXl::class;
+        $imagecache['price-side-lg'] = PriceSideLg::class;
+        $imagecache['price-side-md'] = PriceSideMd::class;
+
+        app()->config['imagecache.templates'] = $imagecache;
     }
 }

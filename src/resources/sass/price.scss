@@ -1,6 +1,14 @@
 .price{
 
+  &__sidebar{
+
+  }
+
   &__menu{
+    margin: 1.25rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1020;
 
     &-item{
 
@@ -22,7 +30,9 @@
     }
 
     &-price{
-      text-align: center;
+      @include media-breakpoint-up(sm){
+        text-align: center;
+      }
     }
   }
 
@@ -100,7 +110,9 @@
     }
 
     &-price{
-      text-align: center;
+      @include media-breakpoint-up(sm){
+        text-align: center;
+      }
       color: $primary;
       font-weight: bold;
     }

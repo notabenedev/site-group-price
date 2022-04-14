@@ -114,6 +114,7 @@ class GroupPriceMakeCommand extends BaseConfigModelCommand
     protected $scssIncludes = [
         "app" => [
             "site-group-price/price",
+            "site-group-price/html",
         ],
     ];
 

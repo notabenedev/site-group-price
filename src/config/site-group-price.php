@@ -15,6 +15,8 @@ return [
     "sitePriceHeaderTitleName" => "Наименование услуги",
     "sitePriceHeaderPriceName" => "Цена (в рублях)",
 
+    "sitePriceOnePageFile" => "",
+
     "groupNest" => 4,
     "onePage" => true,
 
