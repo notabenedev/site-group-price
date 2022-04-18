@@ -6,12 +6,6 @@
        {{ config("site-group-price.sitePackageName","Прайс ") }}
 @endsection
 
-@if (! config("site-group-price.onePage",false))
-@section("sidebar")
-    @include('site-group-price::site.groups.includes.sidebar')
-@endsection
-@endif
-
 @section('content')
     <div class="col-12 col-lg-8">
         @if (config("site-group-price.siteHeadersShow", true))
@@ -26,9 +20,11 @@
         @endif
         @foreach($groups as $item)
                 <div class="row price__group">
-                    <div class="col-12">
-                    @include("site-group-price::site.groups.includes.item", ["item" => $item, "first" => true, "level" => 1])
-                    </div>
+                    @if (isset($item["published_at"]))
+                        <div class="col-12">
+                            @include("site-group-price::site.groups.includes.item", ["item" => $item, "first" => true, "level" => 1])
+                        </div>
+                    @endif
                 </div>
             @endforeach
     </div>

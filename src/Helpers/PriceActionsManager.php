@@ -49,7 +49,7 @@ class PriceActionsManager
      * @param $includeSubs
      * @return mixed
      */
-    public function getGroupPrice($groupId, $includeSubs = false)
+    public function getGroupPriceIds($groupId, $includeSubs = false)
     {
         $group = Group::query()->where("id","=",$groupId)->first();
         $key = "price-actions-getGroupPrice:{$group->id}";
@@ -80,13 +80,13 @@ class PriceActionsManager
      *
      * @param Group $group
      */
-    public function forgetGroupPrice(Group $group)
+    public function forgetGroupPriceIds(Group $group)
     {
         $key = "price-actions-getGroupPrice:{$group->id}";
         Cache::forget("$key-true");
         Cache::forget("$key-false");
         if (! empty($group->parent_id)) {
-            $this->forgetGroupPrice($group->parent);
+            $this->forgetGroupPriceIds($group->parent);
         }
     }
 

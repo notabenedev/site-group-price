@@ -10,10 +10,11 @@ use App\Group;
 use App\Price;
 use App\Observers\Vendor\SiteGroupPrice\GroupObserver;
 use App\Observers\Vendor\SiteGroupPrice\PriceObserver;
-
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\ServiceProvider;
 use Notabenedev\SiteGroupPrice\Console\Commands\GroupPriceMakeCommand;
 use Notabenedev\SiteGroupPrice\Events\GroupChangePosition;
+use Notabenedev\SiteGroupPrice\Facades\GroupActions;
 use Notabenedev\SiteGroupPrice\Listeners\GroupIdsInfoClearCache;
 
 class SiteGroupPriceProvider extends ServiceProvider
@@ -62,6 +63,11 @@ class SiteGroupPriceProvider extends ServiceProvider
 
         // Подключение шаблонов.
         $this->loadViewsFrom(__DIR__ . '/resources/views', 'site-group-price');
+        if (! config("site-group-price.onePage", false)) {
+            view()->composer("site-group-price::site.groups.includes.sidebar", function (View $view){
+                $view->with("groupsTree", Group::getTree());
+            });
+        }
 
         // Подключение метатегов.
         $seo = app()->config["seo-integration.models"];

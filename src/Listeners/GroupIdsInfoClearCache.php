@@ -28,5 +28,6 @@ class GroupIdsInfoClearCache
         $group = $event->group;
         // Очистить список id категорий.
         GroupActions::forgetGroupChildrenIdsCache($group);
+        GroupActions::forgetGroupParentsCache($group);
     }
 }

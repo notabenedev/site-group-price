@@ -44,7 +44,8 @@ class Group extends Model
      */
     public function children()
     {
-        return $this->hasMany(\App\Group::class, "parent_id");
+        return $this->hasMany(\App\Group::class, "parent_id")->orderBy("priority");
+
     }
 
     /**
@@ -138,6 +139,22 @@ class Group extends Model
      */
     public function prices()
     {
-        return $this->hasMany(\App\Price::class);
+        return $this->hasMany(\App\Price::class)->orderBy("priority");
+    }
+
+    /**
+     * Model's tree
+     *
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     *
+     */
+    public static function getTree(){
+        $query = self::query();
+        return $query
+            ->whereNull("parent_id")
+            ->whereNotNull('published_at')
+            ->orderBy("priority")
+            ->with("children")
+            ->get();
     }
 }

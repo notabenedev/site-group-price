@@ -182,7 +182,7 @@ class GroupActionsManager
     protected function makeTreeDataWithNoParent()
     {
         $groups = DB::table("groups")
-            ->select("id", "title", "slug", "short", "description", "accent", "info", "parent_id", "priority", "nested")
+            ->select("id", "title", "slug", "short", "description", "accent", "info", "parent_id", "published_at","priority", "nested")
             ->orderBy("parent_id")
             ->get();
 
@@ -198,6 +198,7 @@ class GroupActionsManager
                 'info' => $group->info,
                 'parent' => $group->parent_id,
                 "priority" => $group->priority,
+                "published_at" => $group->published_at,
                 "id" => $group->id,
                 'children' => [],
                 "url" => route("admin.groups.show", ['group' => $group->slug]),
@@ -316,4 +317,100 @@ class GroupActionsManager
         return $rootGroups;
     }
 
+    /**
+     * Получить дерево подкатегорий.
+     *
+     * @param Group $group
+     * @return array
+     */
+    public function getChildrenTree(Group $group)
+    {
+        list($tree, $noParent) = $this->makeChildrenTreeData($group);
+        $this->addChildren($tree);
+        $this->clearTree($tree, $noParent);
+        return $tree;
+    }
+
+    /**
+     * Получить данные по категориям.
+     *
+     * @return array
+     */
+    protected function makeChildrenTreeData(Group $parent)
+    {
+        $childrenIds = self::getGroupChildren($parent);
+        $groups = DB::table("groups")
+            ->select("id", "title", "slug", "short", "description", "accent", "info", "parent_id", "published_at", "priority", "nested")
+            ->whereIn('id', $childrenIds)
+            ->orderBy("parent_id")
+            ->orderBy('priority')
+            ->get();
+
+        $tree = [];
+        $noParent = [];
+        foreach ($groups as $group) {
+            $tree[$group->id] = [
+                "title" => $group->title,
+                'slug' => $group->slug,
+                'short' => $group->short,
+                'description' => $group->description,
+                'accent' => $group->accent,
+                'info' => $group->info,
+                'parent' => $group->parent_id,
+                "priority" => $group->priority,
+                "published_at" => $group->published_at,
+                "id" => $group->id,
+                'children' => [],
+                "url" => route("admin.groups.show", ['group' => $group->slug]),
+                "siteUrl" => route("site.groups.show", ["group" => $group->slug]),
+            ];
+            if ($parent->id == $group->parent_id) {
+                $noParent[] = $group->id;
+            }
+        }
+        return [$tree, $noParent];
+    }
+
+    /**
+     * Получить id всех родителей.
+     *
+     * @param Group $group
+     * @return array
+     */
+    public function getGroupParents(Group $group)
+    {
+        $key = "group-actions-getGroupParents:{$group->id}";
+        $parentsIds = Cache::rememberForever($key, function () use ($group) {
+            $parentsIds = [];
+            $collection = Group::query()
+                ->select("id")
+                ->where("id", $group->parent->id)
+                ->get();
+            foreach ($collection as $parent) {
+                $parentsIds[] = $parent->id;
+                $groups = $this->getGroupParents($parent);
+                if (! empty($groups)) {
+                    foreach ($groups as $id) {
+                        $parentsIds[] = $id;
+                    }
+                }
+            }
+            return $parentsIds;
+        });
+
+        return $parentsIds;
+    }
+    /**
+     * Очистить кэш списка id родителей.
+     *
+     * @param Group $group
+     */
+    public function forgetGroupParentsCache(Group $group)
+    {
+        Cache::forget("group-actions-getGroupParents:{$group->id}");
+        $parent = $group->parent;
+        if (! empty($parent)) {
+            $this->forgetGroupParentsCache($parent);
+        }
+    }
 }

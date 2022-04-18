@@ -12,7 +12,14 @@ use Notabenedev\SiteGroupPrice\Facades\PriceActions;
 
 class GroupController extends Controller
 {
-    public function index(Request $request)
+    /**
+     *
+     * Show onePage price or redirect to first group
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
+     *
+     */
+    public function index()
     {
         if (config("site-group-price.onePage", true)) {
 
@@ -28,6 +35,7 @@ class GroupController extends Controller
             try {
                 $group = Group::query()
                     ->whereNull("parent_id")
+                    ->whereNotNull("published_at")
                     ->orderBy("priority")
                     ->firstOrFail();
             }
@@ -36,17 +44,42 @@ class GroupController extends Controller
                 $group = null;
             }
 
-            $child = $group->children()->orderBy("priority")->first();
+            $child = $group->children()->whereNotNull("published_at")->orderBy("priority")->first();
             if ($child) {
                 $group = $child;
             }
 
             return redirect()
-                ->route("site-group-price::site.groups.show",
+                ->route("site.groups.show",
                     ["group" => $group]);
 
         }
 
+    }
+
+    /**
+     * Show group price
+     *
+     *
+     * @param Group $group
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     *
+     */
+    public function show(Group $group){
+
+        if (config("site-group-price.onePage", false) || !$group->published_at) {
+            return redirect()
+                ->route("site.groups.index", [], 301);
+        }
+        else{
+
+            $groups = GroupActions::getChildrenTree($group);
+
+            return view("site-group-price::site.groups.show", [
+                "group" => $group,
+                "groups" => $groups,
+            ]);
+        }
     }
 
 }

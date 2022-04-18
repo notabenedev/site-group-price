@@ -60,6 +60,15 @@ class GroupObserver
         }
 
     }
+    /**
+     * После создания.
+     *
+     * @param Group $group
+     */
+    public function updated(Group $group)
+    {
+        $this->groupChangedParent($group, $group->parent->id);
+    }
 
     /**
      * Перед удалением

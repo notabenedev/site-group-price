@@ -2,6 +2,45 @@
 
   &__sidebar{
 
+    margin: $grid-gutter-width 0 !important;
+
+    &-item {
+      padding-right: 0;
+      padding-left: 1rem;
+      border: 0;
+    }
+
+    &-link {
+      color: $body-color;
+      line-height: 1.2;
+      padding-bottom: .5rem;
+      padding-right: 1rem;
+      &:hover, &_active {
+        color: $primary !important;
+        text-decoration: none;
+      }
+
+      &_drop {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      &_child {
+        color: $secondary;
+        display: block;
+        &:hover {
+          color: $primary;
+          text-decoration: none;
+        }
+      }
+    }
+
+    &-children {
+      padding: .5rem $grid-gutter-width / 2;
+      margin-bottom: 0;
+    }
+
   }
 
   &__menu{
@@ -42,6 +81,7 @@
 
     &-title{
       font-weight: bold;
+      margin: 1rem 0;
 
       &_level-1{
         color: $primary;
@@ -56,14 +96,13 @@
 
       &_level-3{
         color: $primary;
-        margin-bottom: 1.125rem;
-        font-size: 1.125rem;
+        margin-bottom: 1.25rem;
+        font-size: 1.25rem;
         font-weight: normal;
       }
       &_level-4{
-        color: $secondary;
-        margin-bottom: 1rem;
-        font-size: 1rem;
+        margin-bottom: 1.125rem;
+        font-size: 1.125rem;
         font-weight: normal;
       }
 
@@ -76,12 +115,12 @@
 
     &-description{
       padding: 1.25rem;
-      margin: 0 -0.5*$grid-gutter-width;
+      margin: 1rem -0.5*$grid-gutter-width;
       background-color: lighten($primary, 20%);
     }
 
     &-accent{
-      padding: 1.25rem 0.5rem;
+      padding: 1.25rem 0rem;
       font-weight: bold;
       text-transform: uppercase;
     }
@@ -91,6 +130,10 @@
 
 
     &-item{
+    }
+
+    &-child{
+      margin: 0.5rem 0.5rem 0.5rem 0;
     }
   }
 
