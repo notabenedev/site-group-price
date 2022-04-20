@@ -26,7 +26,7 @@ class PricePolicy
      */
     public function __construct()
     {
-        $this->__ipoConstruct("GroupPolicy");
+        $this->__ipoConstruct("PricePolicy");
 
     }
 
