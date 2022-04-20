@@ -12,6 +12,6 @@ class PriceSideMd implements FilterInterface {
     {
 
         return $image
-            ->fit(720,300);
+            ->fit(315,290);
     }
 }
