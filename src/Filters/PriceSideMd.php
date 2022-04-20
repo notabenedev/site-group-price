@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filters;
+namespace Notabenedev\SiteGroupPrice\Filters;
 
 use Intervention\Image\Facades\Image;
 use Intervention\Image\Filters\FilterInterface;

@@ -2,10 +2,10 @@
 
 namespace Notabenedev\SiteGroupPrice;
 
-use App\Filters\PriceSide;
-use App\Filters\PriceSideLg;
-use App\Filters\PriceSideMd;
-use App\Filters\PriceSideXl;
+use Notabenedev\SiteGroupPrice\Filters\PriceSide;
+use Notabenedev\SiteGroupPrice\Filters\PriceSideLg;
+use Notabenedev\SiteGroupPrice\Filters\PriceSideMd;
+use Notabenedev\SiteGroupPrice\Filters\PriceSideXl;
 use App\Group;
 use App\Price;
 use App\Observers\Vendor\SiteGroupPrice\GroupObserver;
@@ -72,7 +72,6 @@ class SiteGroupPriceProvider extends ServiceProvider
         // Подключение метатегов.
         $seo = app()->config["seo-integration.models"];
         $seo["groups"] = Group::class;
-        $seo["prices"] = Price::class;
         app()->config["seo-integration.models"] = $seo;
 
         // Шаблоны изображений
@@ -142,5 +141,12 @@ class SiteGroupPriceProvider extends ServiceProvider
         $imagecache['price-side-md'] = PriceSideMd::class;
 
         app()->config['imagecache.templates'] = $imagecache;
+
+        $imagecachePaths = app()->config['imagecache.paths'];
+        if (!in_array('images/site', $imagecachePaths)){
+            $imagecachePaths[] = 'images/site';
+            app()->config['imagecache.paths'] = $imagecachePaths;
+        }
+
     }
 }
