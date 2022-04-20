@@ -10,14 +10,16 @@
                             {{ config("site-group-price.sitePricesName") }}
                         </a>
                     </li>
-
-                    <li class="nav-item">
-                        <a href="{{ route("admin.groups.prices.tree", ["group" => $group]) }}"
-                           class="nav-link{{ $currentRoute === "admin.groups.prices.tree" ? " active" : "" }}">
-                            Приоритет
-                        </a>
-                    </li>
                 @endcan
+                @can("update", \App\Price::class)
+                        <li class="nav-item">
+                            <a href="{{ route("admin.groups.prices.tree", ["group" => $group]) }}"
+                               class="nav-link{{ $currentRoute === "admin.groups.prices.tree" ? " active" : "" }}">
+                                Приоритет
+                            </a>
+                        </li>
+                    @endcan
+
 
                 @can("create", \App\Price::class)
                     <li class="nav-item">
@@ -38,7 +40,7 @@
                         </li>
                     @endcan
 
-                    @can("update", $price)
+                    @can("update", \App\Price::class)
                         <li class="nav-item">
                             <a href="{{ route("admin.prices.edit", ["price" => $price]) }}"
                                class="nav-link{{ $currentRoute === "admin.prices.edit" ? " active" : "" }}">
@@ -47,7 +49,7 @@
                         </li>
                     @endcan
 
-                    @can("delete", $price)
+                    @can("delete", \App\Price::class)
                         <li class="nav-item">
                             <button type="button" class="btn btn-link nav-link"
                                     data-confirm="{{ "delete-form-price-{$price->id}" }}">

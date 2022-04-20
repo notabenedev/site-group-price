@@ -44,15 +44,6 @@ class PriceController extends Controller
             $fromRoute = route("admin.prices.index");
         }
 
-        if ($published = $request->get("published", "all")) {
-            if ($published == "no") {
-                $collection->whereNull("published_at");
-            }
-            elseif ($published == "yes") {
-                $collection->whereNotNull("published_at");
-            }
-        }
-
         $collection->orderBy("priority", "asc");
         $prices = $collection
             ->paginate()

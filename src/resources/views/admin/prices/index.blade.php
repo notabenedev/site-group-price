@@ -27,18 +27,6 @@
                            value="{{ $request->get("title", "") }}"
                            class="form-control  mb-2 mr-sm-2">
 
-                    <select class="custom-select mb-2 mr-sm-2" name="published" aria-label="Статус публикации">
-                        <option value="all"{{ ! $request->has('published') || $request->get('published') == 'all' ? " selected" : '' }}>
-                            Статус публикации
-                        </option>
-                        <option value="yes"{{ $request->get('published') === 'yes' ? " selected" : '' }}>
-                            Опубликовано
-                        </option>
-                        <option value="no"{{ $request->get('published') === 'no' ? " selected" : '' }}>
-                            Снято с публикации
-                        </option>
-                    </select>
-
                     <button class="btn btn-primary mb-2 mr-2" type="submit">Применить</button>
                     <a href="{{ $fromRoute }}" class="btn btn-secondary mb-2">
                         Сбросить

@@ -67,7 +67,10 @@ class GroupObserver
      */
     public function updated(Group $group)
     {
+        if (isset($group->parent))
         $this->groupChangedParent($group, $group->parent->id);
+        else
+            $this->groupChangedParent($group, "");
     }
 
     /**
