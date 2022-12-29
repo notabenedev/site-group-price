@@ -1,21 +1,24 @@
 ## Site group price
 
-## Install
+## Конфиг
+    php artisan vendor:publish --provider="Notabenedev\SiteGroupPrice\SiteGroupPriceProvider" --tag=config
 
-- php artisan migrate
-- php artisan vendor:publish --provider="Notabenedev\SiteGroupPrice\SiteGroupPriceProvider" --tag=public --force
-- php artisan vendor:publish --provider="Notabenedev\SiteGroupPrice\SiteGroupPriceProvider" --tag=config
-- php artisan make:group-price 
-{--all : Run all}
-{--menu : admin menu}
-{--models : Export models}
-{--observers : Export observers}
-{--controllers : Export controllers}
-{--policies : Export and create rules}
-{--only-default : Create default rules}
-{--vue : Export Vue components}
+## Install
+    php artisan migrate
+    php artisan vendor:publish --provider="Notabenedev\SiteGroupPrice\SiteGroupPriceProvider" --tag=public --force
+    php artisan make:group-price
+          {--all : Run all}
+          {--menu : admin menu}
+          {--models : Export models}
+          {--observers : Export observers}
+          {--controllers : Export controllers}
+          {--policies : Export and create rules}
+          {--only-default : Create default rules}
+          {--vue : Export Vue components}
 
 ## Description
+    v0.0.6 fix publishCascade, fix  admin group menu (srt active)
+    v0.0.5 fix publishCascade, fix  price policy
 
 ## Config
     
@@ -44,3 +47,4 @@
      
     "groupUrlName" => url групп прайсов
     "priceUrlName" => url прайса
+
