@@ -97,39 +97,43 @@ class Group extends Model
         $collection = $children->get();
         $parentPublished = $this->isParentPublished();
 
-        // for parents groups
-        if ($collection->count() > 0) {
-
-            //unpublished group and child groups
-            if ($published || !$parentPublished) {
-                $this->published_at = null;
-                $this->save();
-
-                foreach ($collection as $child) {
-                    $child->published_at = null;
-                    $child->save();
-                }
-
-            } else {
-                //publish group
-                $this->publish();
-            }
-            return
-                redirect()
-                    ->back();
-
-        }
-        // for leaf groups
-        else {
-            //can't publish the leaf when parent is unpublished
-            if (!$published  && !$parentPublished) {
-                return redirect()
-                    ->back();
-            }
+        if ($parentPublished){
+            // change publish
             $this->publish();
+            if($published){
+                $this->unPublishChildren($collection);
+            }
+            return true;
+        }
+        else
+        {
+            if (!$published){
+                return false;
+            }
+            else {
+                $this->publish();
+                $this->unPublishChildren($collection);
+                return true;
+            }
+        }
+    }
 
-            return redirect()
-                ->back();
+    /**
+     * UnPublish child
+     *
+     * @param $collection
+     * @return void
+     *
+     */
+    protected function unPublishChildren($collection, $cascade = true){
+        if ($collection->count() > 0) {
+            foreach ($collection as $child) {
+                $child->published_at = null;
+                $child->save();
+                if ($cascade) {
+                    $this->unPublishChildren($child->children()->get());
+                }
+            }
         }
     }
     /**

@@ -1,6 +1,6 @@
 @php
-    $active = (strstr($currentRoute, ".groups.") !== false) ||
-              (strstr($currentRoute, ".price.") !== false);
+    $active = (strstr($currentRoute, "admin.groups.") !== false) ||
+              (strstr($currentRoute, "admin.price.") !== false);
 @endphp
 
 @if ($theme == "sb-admin")

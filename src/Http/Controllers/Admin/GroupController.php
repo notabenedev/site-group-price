@@ -245,10 +245,16 @@ class GroupController extends Controller
     {
         $this->authorize("update", $group);
 
-        $group->publishCascade();
-
-        return redirect()
-            ->back();
+        if($group->publishCascade())
+            return
+                redirect()
+                    ->back()
+                    ->with("success", "Успешно изменено");
+        else
+            return
+                redirect()
+                    ->back()
+                    ->with("danger", "Статус не может быть изменен");
     }
 
     /**
