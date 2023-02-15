@@ -90,7 +90,8 @@
 
   &__group{
 
-    margin: $grid-gutter-width 0;
+    margin-top: $grid-gutter-width;
+    margin-bottom: $grid-gutter-width;
 
     &-title{
       font-weight: bold;

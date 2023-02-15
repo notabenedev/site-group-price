@@ -17,6 +17,10 @@
           {--vue : Export Vue components}
 
 ## Description
+    v0.0.8 fix price__group margin
+        php artisan vendor:publish --provider="Notabenedev\SiteGroupPrice\SiteGroupPriceProvider" --tag=public --force
+    v0.0.7 siteBreadcrumbs config
+        use variable to show breadcrumb
     v0.0.6 fix publishCascade, fix  admin group menu (srt active)
     v0.0.5 fix publishCascade, fix  price policy
 
