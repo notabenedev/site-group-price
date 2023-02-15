@@ -23,10 +23,23 @@ class GroupController extends Controller
     {
         if (config("site-group-price.onePage", true)) {
 
+            $siteBreadcrumb = null;
+
+            if (config("site-group-price.siteBreadcrumbs")){
+                $siteBreadcrumb = [
+                    (object) [
+                        'active' => true,
+                        'url' => route("site.groups.index"),
+                        'title' => config("site-group-price.sitePackageName"),
+                    ]
+                ];
+            }
+
             $groups = GroupActions::getTree();
             return view("site-group-price::site.groups.index", [
                 "rootGroups" => GroupActions::getRootGroups(),
                 "groups" => $groups,
+                "siteBreadcrumb" => $siteBreadcrumb,
             ]);
 
         }
@@ -73,11 +86,17 @@ class GroupController extends Controller
         }
         else{
 
+            $siteBreadcrumb = null;
+
+            if (config("site-group-price.siteBreadcrumbs")){
+                $siteBreadcrumb = GroupActions::getSiteBreadcrumb($group);
+            }
             $groups = GroupActions::getChildrenTree($group);
 
             return view("site-group-price::site.groups.show", [
                 "group" => $group,
                 "groups" => $groups,
+                "siteBreadcrumb" => $siteBreadcrumb,
             ]);
         }
     }

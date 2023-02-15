@@ -301,6 +301,39 @@ class GroupActionsManager
     }
 
     /**
+     * Site breadcrumbs
+     *
+     * @param Group $group
+     * @param bool $isPagePage
+     * @return array
+     *
+     */
+    public function getSiteBreadcrumb(Group $group)
+    {
+        $breadcrumb = [];
+        if (! empty($group->parent)) {
+            $breadcrumb = $this->getSiteBreadcrumb($group->parent);
+        }
+        else {
+            $breadcrumb[] = (object) [
+                "title" => config("site-group-price.sitePackageName"),
+                "url" => route("site.groups.index"),
+                "active" => false,
+            ];
+        }
+        $routeParams = Route::current()->parameters();
+        $active = ! empty($routeParams["group"]) &&
+            $routeParams["group"]->id == $group->id;
+        $breadcrumb[] = (object) [
+            "title" => $group->title,
+            "url" => route("site.groups.show", ["group" => $group]),
+            "active" => $active,
+        ];
+
+        return $breadcrumb;
+    }
+
+    /**
      * Get root groups
      *
      * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
