@@ -17,6 +17,7 @@
           {--vue : Export Vue components}
 
 ## Description
+    v0.0.9 add group metas
     v0.0.8 fix price__group margin
         php artisan vendor:publish --provider="Notabenedev\SiteGroupPrice\SiteGroupPriceProvider" --tag=public --force
     v0.0.7 siteBreadcrumbs config

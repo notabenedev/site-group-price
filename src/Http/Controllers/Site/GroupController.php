@@ -35,11 +35,14 @@ class GroupController extends Controller
                 ];
             }
 
+            $pageMetas = Meta::getByPageKey(config("site-group-price.groupUrlName"));
+
             $groups = GroupActions::getTree();
             return view("site-group-price::site.groups.index", [
                 "rootGroups" => GroupActions::getRootGroups(),
                 "groups" => $groups,
                 "siteBreadcrumb" => $siteBreadcrumb,
+                "pageMetas" => $pageMetas,
             ]);
 
         }
@@ -91,12 +94,16 @@ class GroupController extends Controller
             if (config("site-group-price.siteBreadcrumbs")){
                 $siteBreadcrumb = GroupActions::getSiteBreadcrumb($group);
             }
+
+            $pageMetas = Meta::getByModelKey($group);
+
             $groups = GroupActions::getChildrenTree($group);
 
             return view("site-group-price::site.groups.show", [
                 "group" => $group,
                 "groups" => $groups,
                 "siteBreadcrumb" => $siteBreadcrumb,
+                "pageMetas" => $pageMetas,
             ]);
         }
     }
