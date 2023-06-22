@@ -3,7 +3,7 @@
     "description": "add group and price",
     "type": "library",
     "require": {
-        "portedcheese/base-settings": "^v3.0",
+        "portedcheese/base-settings": "^v3.0 | ^v4.0",
         "portedcheese/seo-integration": "^v1.4",
         "portedcheese/admin-site-menu": "^v1.6"
     },
