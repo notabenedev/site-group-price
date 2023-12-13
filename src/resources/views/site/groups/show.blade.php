@@ -39,10 +39,9 @@
 {{--            ['id' => $id, 'loop' => $loop, 'price' => $price, 'margin' => true]--}}
 {{--            )--}}
 {{--        @endforeach--}}
+
         @foreach($group->prices as $price)
-            @include('site-group-price::site.groups.includes.item-price',
-            ['id' => $price->id, 'loop' => $loop, 'price' => $price, 'margin' => true]
-            )
+            @include($template, ['id' => $price->id, 'loop' => $loop, 'price' => $price, 'margin' => true])
         @endforeach
 
         @if($group->nested)

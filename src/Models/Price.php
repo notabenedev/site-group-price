@@ -4,11 +4,12 @@ namespace Notabenedev\SiteGroupPrice\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use PortedCheese\BaseSettings\Traits\ShouldImage;
 use PortedCheese\BaseSettings\Traits\ShouldSlug;
 
 class Price extends Model
 {
-    use HasFactory, ShouldSlug;
+    use HasFactory, ShouldSlug, ShouldImage;
 
     protected $fillable = [
         "title",

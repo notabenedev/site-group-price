@@ -72,6 +72,28 @@
                         @enderror
                     </div>
 
+                    @if (config("site-group-price.usePriceImage"))
+                        <div class="form-group">
+                            <label for="custom-file-input">Изображение</label>
+                            <div class="custom-file">
+                                <input type="file"
+                                       class="custom-file-input{{ $errors->has('image') ? ' is-invalid' : '' }}"
+                                       id="custom-file-input"
+                                       lang="ru"
+                                       name="image">
+                                <label class="custom-file-label"
+                                       for="custom-file-input">
+                                    Выберите файл
+                                </label>
+                                @if ($errors->has('image'))
+                                    <div class="invalid-feedback">
+                                        <strong>{{ $errors->first('image') }}</strong>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                    @endif
+
                     <div class="btn-group"
                          role="group">
                         <button type="submit" class="btn btn-success">Добавить</button>

@@ -83,6 +83,8 @@ class PriceController extends Controller
         /**
          * @var Price $price
          */
+        $price->uploadImage($request, "price", "image");
+
         return redirect()
             ->route("admin.prices.show", ["price" => $price])
             ->with("success", "Добавлено");
@@ -95,11 +97,13 @@ class PriceController extends Controller
             "slug" => ["nullable", "max:150", "unique:prices,slug"],
             "price" => ["nullable", "max:150"],
             "description" => ["nullable"],
+            "image" => ["nullable", "image"],
         ], [], [
             "title" => "Заголовок",
             "slug" => "Адресная строка",
             "price" => "Цена",
             "description" => "Описание",
+            "image" => "Изображение",
         ])->validate();
     }
 
@@ -113,9 +117,10 @@ class PriceController extends Controller
     {
         $group = $price->group;
         $groups = GroupActions::getAllList();
+        $image = $price->image;
         return view(
             "site-group-price::admin.prices.show",
-            compact("price", "group", "groups")
+            compact("price", "group", "groups", "image")
         );
     }
 
@@ -176,6 +181,7 @@ class PriceController extends Controller
         $this->updateValidator($request->all(), $price);
         // Обновление.
         $price->update($request->all());
+        $price->uploadImage($request, "price", "image");
 
         return redirect()
             ->route("admin.prices.show", ["price" => $price])
@@ -190,12 +196,13 @@ class PriceController extends Controller
             "slug" => ["nullable", "max:150", "unique:prices,slug,{$id}"],
             "price" => ["nullable", "max:150"],
             "description" => ["nullable"],
+            "image" => ["nullable", "image"],
         ], [], [
             "title" => "Заголовок",
             "slug" => "Адресная строка",
             "price" => "Цена",
             "description" => "Описание",
-
+            "image" => "Изображение",
         ])->validate();
     }
     /**

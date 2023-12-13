@@ -66,6 +66,21 @@
                         </dd>
                     @endif
 
+                    @if ($image)
+                        <dt class="col-sm-3">Изображение:</dt>
+                        <dd class="col-sm-9">
+                            <div>
+                                @img([
+                                "image" => $image,
+                                "template" => "medium",
+                                "lightbox" => "lightGroup" . $price->id,
+                                "imgClass" => "rounded mb-2",
+                                "grid" => [],
+                                ])
+                            </div>
+                        </dd>
+                    @endif
+
                 </dl>
             </div>
         </div>

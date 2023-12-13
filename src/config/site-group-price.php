@@ -19,6 +19,7 @@ return [
 
     "groupNest" => 4,
     "onePage" => true,
+    "usePriceImage" => true,
 
     "groupUrlName" => "price",
     "priceUrlName" => "position",

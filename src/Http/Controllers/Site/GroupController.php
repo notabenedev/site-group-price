@@ -99,9 +99,15 @@ class GroupController extends Controller
 
             $groups = GroupActions::getChildrenTree($group);
 
+            $template = (! config("site-group-price.usePriceImage", false)) ?
+                "site-group-price::site.groups.includes.item-price":
+                "site-group-price::site.groups.includes.item-price-teaser";
+
+
             return view("site-group-price::site.groups.show", [
                 "group" => $group,
                 "groups" => $groups,
+                "template" => $template,
                 "siteBreadcrumb" => $siteBreadcrumb,
                 "pageMetas" => $pageMetas,
             ]);

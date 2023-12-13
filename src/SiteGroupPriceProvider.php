@@ -44,6 +44,11 @@ class SiteGroupPriceProvider extends ServiceProvider
         $this->publishes([__DIR__.'/config/site-group-price.php' => config_path('site-group-price.php'),
             ], 'config');
 
+        // Подключаем изображения.
+        $imagecache = app()->config['imagecache.paths'];
+        $imagecache[] = 'storage/price';
+        app()->config['imagecache.paths'] = $imagecache;
+
         //Подключение миграций
         $this->loadMigrationsFrom(__DIR__.'/database/migrations');
 
