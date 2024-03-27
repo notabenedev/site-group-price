@@ -2,7 +2,7 @@
 <div class="row">
 @endif
     <div class="col-12 col-sm-6 col-lg-3 mb-3">
-        <div class="card card-base h-100 price-teaser">
+        <div class="card card-base h-100 price-teaser" id="{{ $price["slug"] }}">
             @if ($price->image)
                 <div class="price-image-scale">
                         @picLazy([
