@@ -18,16 +18,16 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <form action="{{ $fromRoute }}" method="get" class="form-inline">
+                <form action="{{ $fromRoute }}" method="get" class="d-lg-flex">
                     <label for="title" class="sr-only">Заголовок</label>
                     <input type="text"
                            id="title"
                            name="title"
                            placeholder="Заголовок"
                            value="{{ $request->get("title", "") }}"
-                           class="form-control  mb-2 mr-sm-2">
+                           class="form-control  mb-2 me-sm-2">
 
-                    <button class="btn btn-primary mb-2 mr-2" type="submit">Применить</button>
+                    <button class="btn btn-primary mb-2 me-2" type="submit">Применить</button>
                     <a href="{{ $fromRoute }}" class="btn btn-secondary mb-2">
                         Сбросить
                     </a>
@@ -61,7 +61,7 @@
                                 @canany(["update", "view", "delete"], $item)
                                     <td>
                                         <div role="toolbar" class="btn-toolbar">
-                                            <div class="btn-group mr-1">
+                                            <div class="btn-group me-1">
                                                 @can("update", $item)
                                                     <a href="{{ route("admin.prices.edit", ["price" => $item]) }}" class="btn btn-primary">
                                                         <i class="far fa-edit"></i>

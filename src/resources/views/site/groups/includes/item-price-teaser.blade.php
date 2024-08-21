@@ -9,6 +9,7 @@
                         "image" => $price->image,
                         "template" => "sm-grid-12",
                         "grid" => [
+                        "xl-grid-3"  => 1200,
                         "lg-grid-3"  => 992,
                         "md-grid-6"  => 768,
                         "sm-grid-6"  => 576

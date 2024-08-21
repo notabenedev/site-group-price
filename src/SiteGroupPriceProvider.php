@@ -15,6 +15,7 @@ use Illuminate\Support\ServiceProvider;
 use Notabenedev\SiteGroupPrice\Console\Commands\GroupPriceMakeCommand;
 use Notabenedev\SiteGroupPrice\Events\GroupChangePosition;
 use Notabenedev\SiteGroupPrice\Facades\GroupActions;
+use Notabenedev\SiteGroupPrice\Filters\PriceSideXxl;
 use Notabenedev\SiteGroupPrice\Listeners\GroupIdsInfoClearCache;
 
 class SiteGroupPriceProvider extends ServiceProvider
@@ -141,6 +142,7 @@ class SiteGroupPriceProvider extends ServiceProvider
         $imagecache = app()->config['imagecache.templates'];
 
         $imagecache['price-side'] = PriceSide::class;
+        $imagecache['price-side-xxl'] = PriceSideXxl::class;
         $imagecache['price-side-xl'] = PriceSideXl::class;
         $imagecache['price-side-lg'] = PriceSideLg::class;
         $imagecache['price-side-md'] = PriceSideMd::class;

@@ -3,9 +3,9 @@
     "description": "add group and price",
     "type": "library",
     "require": {
-        "portedcheese/base-settings": "^v3.0 | ^v4.0",
-        "portedcheese/seo-integration": "^v1.4",
-        "portedcheese/admin-site-menu": "^v1.6"
+        "portedcheese/base-settings": "^5.0",
+        "portedcheese/seo-integration": "^1.5",
+        "portedcheese/admin-site-menu": "^2.0"
     },
     "license": "MIT",
     "authors": [

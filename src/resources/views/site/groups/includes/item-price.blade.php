@@ -1,4 +1,4 @@
-<div class="row price__list{{ isset($margin) ? " mx-0": "" }}{{ ($loop->iteration % 2 == 0) ? "" : " price__list-iteration" }}"
+<div class="row gx-0 price__list{{ isset($margin) ? " mx-0": "" }}{{ ($loop->iteration % 2 == 0) ? "" : " price__list-iteration" }}"
      id="{{ $price["slug"]}}">
     <div class="col-12 col-sm-7 col-md-8 col-lg-9 price__list-title">
         {{ $price["title"] }}

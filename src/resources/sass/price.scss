@@ -37,7 +37,7 @@
     }
 
     &-children {
-      padding: .5rem $grid-gutter-width / 2;
+      padding: .5rem $grid-gutter-width * .5;
       margin-bottom: 0;
     }
 
@@ -129,7 +129,8 @@
 
     &-description{
       padding: 1.25rem;
-      margin: 1rem -0.5*$grid-gutter-width;
+      margin-top: 1rem;// -0.5*$grid-gutter-width;
+      margin-bottom: 1rem;// -0.5*$grid-gutter-width;
       background-color: lighten($primary, 20%);
     }
 
@@ -153,9 +154,12 @@
 
   &__list {
     font-size: 1.125rem;
-    padding-top: 0.875rem;
-    padding-bottom: 0.875rem;
+    padding: 0.875rem;
 
+    &:hover{
+      background-color: lighten($secondary, 70%);
+      transition: $btn-transition;
+    }
     &-iteration{
       background-color: lighten($secondary, 50%);
     }

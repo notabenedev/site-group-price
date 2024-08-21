@@ -4,6 +4,7 @@
             "image" => (object) ["file_name" => config("site-group-price.sitePriceOnePageFile"), "name" => "Прайс"],
             "template" => "price-side",
             "grid" => [
+            "price-side-xxl" => 1400,
             "price-side-xl" => 1200,
             "price-side-lg" => 992,
             "price-side-md" => 768,
