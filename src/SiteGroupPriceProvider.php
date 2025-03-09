@@ -19,6 +19,8 @@ use Notabenedev\SiteGroupPrice\Facades\GroupActions;
 use Notabenedev\SiteGroupPrice\Filters\PriceSideXxl;
 use Notabenedev\SiteGroupPrice\Listeners\GroupIdsInfoClearCache;
 use Notabenedev\SiteGroupPrice\Listeners\PriceIdsClearCache;
+use Notabenedev\SiteGroupPrice\Listeners\PricePriorityListener;
+use PortedCheese\BaseSettings\Events\PriorityUpdate;
 
 class SiteGroupPriceProvider extends ServiceProvider
 {
@@ -122,6 +124,7 @@ class SiteGroupPriceProvider extends ServiceProvider
         // Изменение позиции группы.
         $this->app["events"]->listen(GroupChangePosition::class, GroupIdsInfoClearCache::class);
         $this->app["events"]->listen(PriceListChange::class, PriceIdsClearCache::class);
+        $this->app["events"]->listen(PriorityUpdate::class, PricePriorityListener::class);
     }
 
     /**
