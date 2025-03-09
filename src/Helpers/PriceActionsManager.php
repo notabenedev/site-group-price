@@ -38,8 +38,8 @@ class PriceActionsManager
         //при переносле позиции в другую группу меняется набор позиций у обоих групп
         event(new PriceListChange($price->group));
         event(new PriceListChange($original));
-        $this::forgetGroupPriceIds($price->group);
-        $this::forgetGroupPriceIds($original);
+        //$this::forgetGroupPriceIds($price->group);
+        //$this::forgetGroupPriceIds($original);
 
     }
     /**

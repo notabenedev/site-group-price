@@ -2,6 +2,7 @@
 
 namespace Notabenedev\SiteGroupPrice;
 
+use Notabenedev\SiteGroupPrice\Events\PriceListChange;
 use Notabenedev\SiteGroupPrice\Filters\PriceSide;
 use Notabenedev\SiteGroupPrice\Filters\PriceSideLg;
 use Notabenedev\SiteGroupPrice\Filters\PriceSideMd;
@@ -17,6 +18,7 @@ use Notabenedev\SiteGroupPrice\Events\GroupChangePosition;
 use Notabenedev\SiteGroupPrice\Facades\GroupActions;
 use Notabenedev\SiteGroupPrice\Filters\PriceSideXxl;
 use Notabenedev\SiteGroupPrice\Listeners\GroupIdsInfoClearCache;
+use Notabenedev\SiteGroupPrice\Listeners\PriceIdsClearCache;
 
 class SiteGroupPriceProvider extends ServiceProvider
 {
@@ -119,6 +121,7 @@ class SiteGroupPriceProvider extends ServiceProvider
     {
         // Изменение позиции группы.
         $this->app["events"]->listen(GroupChangePosition::class, GroupIdsInfoClearCache::class);
+        $this->app["events"]->listen(PriceListChange::class, PriceIdsClearCache::class);
     }
 
     /**

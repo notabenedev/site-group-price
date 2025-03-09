@@ -3,6 +3,8 @@
 namespace Notabenedev\SiteGroupPrice\Observers;
 
 use App\Price;
+use Notabenedev\SiteGroupPrice\Events\GroupChangePosition;
+use Notabenedev\SiteGroupPrice\Events\PriceListChange;
 use Notabenedev\SiteGroupPrice\Facades\PriceActions;
 
 class PriceObserver
@@ -14,7 +16,7 @@ class PriceObserver
      * @param Price $price
      */
     public function created(Price $price){
-        PriceActions::forgetGroupPriceIds($price->group);
+        event(new PriceListChange($price->group));
     }
 
 
@@ -25,7 +27,7 @@ class PriceObserver
      */
     public function updated(Price $price)
     {
-        PriceActions::forgetGroupPriceIds($price->group);
+        event(new PriceListChange($price->group));
     }
 
     /**
@@ -35,7 +37,7 @@ class PriceObserver
      */
     public function deleted(Price $price)
     {
-        PriceActions::forgetGroupPriceIds($price->group);
+        event(new PriceListChange($price->group));
     }
 
 }
